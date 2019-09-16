@@ -1,0 +1,377 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Turing!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>Végtelen ciklus</title>
+        <para>
+            Írj olyan C végtelen ciklusokat, amelyek 0 illetve 100 százalékban dolgoztatnak egy magot és egy olyat, amely  
+            100 százalékban minden magot!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/SylwerStone/Prog1/tree/loop">itt</link>                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+			
+			A végtelen ciklus, olyan ciklus amely, soha nem ér véget, ezzel terhelve a processzort.
+            A 100 százalékos terhelést egy magon a legkönnyebb végrehajtani, ehhez egy sima, egyszerű végtelen cikrusra van szükségünk, amely addig fut folyamatosan míg le nem állítjuk.
+            A 0%-os terheléshez, a végtelen ciklusba szükséges egy "sleep" függvény, ami úgymond "elaltatja" azt a szálat amelyet a végtelen ciklus használna, így a processzor mag terhelése 0%-os lesz.
+            Ahhoz hogy minden magot 100%-on dolgoztasson, szükségünk lesz az OpenMP-re és a "#pragma omp paralell" sorra. Ez röviden több szálon dolgoztatja a programot, így elérve, hogy minden processzormag 100%-osan legyen kihasználva.
+
+        </para>            
+    </section>        
+        
+    <section>
+        <title>Lefagyott, nem fagyott, akkor most mi van?</title>
+        <para>
+            Mutasd meg, hogy nem lehet olyan programot írni, amely bármely más programról eldönti, hogy le fog-e fagyni vagy sem!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:  tegyük fel, hogy akkora haxorok vagyunk, hogy meg tudjuk írni a <function>Lefagy</function>
+            függvényt, amely tetszőleges programról el tudja dönteni, hogy van-e benne vlgtelen ciklus:              
+        </para>
+        <programlisting language="c"><![CDATA[Program T100
+{
+
+	boolean Lefagy(Program P)
+	{
+		 if(P-ben van végtelen ciklus)
+			return true;
+		 else
+			return false; 
+	}
+
+	main(Input Q)
+	{
+		Lefagy(Q)
+	}
+}]]></programlisting>            
+        <para>
+            A program futtatása, például akár az előző <filename>v.c</filename> ilyen pszeudókódjára:
+            <screen><![CDATA[T100(t.c.pseudo)
+true]]></screen>            
+            akár önmagára
+            <screen><![CDATA[T100(T100)
+false]]></screen>  
+            ezt a kimenetet adja.          
+        </para>
+        <para>
+            A T100-as programot felhasználva készítsük most el az alábbi T1000-set, amelyben a
+            Lefagy-ra épőlő Lefagy2 már nem tartalmaz feltételezett, csak csak konkrét kódot:
+        </para>
+        <programlisting language="c"><![CDATA[Program T1000
+{
+
+	boolean Lefagy(Program P)
+	{
+		 if(P-ben van végtelen ciklus)
+			return true;
+		 else
+			return false; 
+	}
+
+	boolean Lefagy2(Program P)
+	{
+		 if(Lefagy(P))
+			return true;
+		 else
+			for(;;); 
+	}
+
+	main(Input Q)
+	{
+		Lefagy2(Q)
+	}
+
+}]]></programlisting>            
+        <programlisting><![CDATA[]]></programlisting>            
+        <para>
+            Mit for kiírni erre a <computeroutput>T1000(T1000)</computeroutput> futtatásra?
+                                
+            <itemizedlist>
+                <listitem>
+                    <para>Ha T1000 lefagyó, akkor nem fog lefagyni, kiírja, hogy true</para>                        
+                </listitem>
+                <listitem>
+                    <para>Ha T1000 nem fagyó, akkor pedig le fog fagyni...</para>                        
+                </listitem>
+            </itemizedlist>
+            akkor most hogy fog működni? Sehogy, mert ilyen <function>Lefagy</function>
+            függvényt, azaz a T100 program nem is létezik.                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+			
+			A T100 egy programot kap meg bemenetként, amiről neki el kell dönteni, hogy az  legáll-e, vagy nem. Tehát a T100-as kap egy programot inputként, és megnézi, hogy az általa kapott program kódjában található-e végtelen ciklus. 
+            Ha ezt sikerült megállapítania kapunk egy igaz vagy hamis kimenetet. Ezt az outputot kapja meg majd a T1000-es, amely ha a igaz a bemenet, lefagy, ha hamis, akkor pedig bekerül egy végtelen ciklusba. 
+            Eddig minden oké, de mi történik akkor, ha a T1000-nek saját magát adjuk oda bemenetként? Ha ő azt látja, hogy van saját magában végtelen cilus, akkor le fog fagyni, ha nincs, akkor viszont bekerül egy végtelen ciklusba. Emiatt az ellentmondás miatt nem lehet ilyen programot írni. Vagy legalábbis eddig még senkinek nem sikerült
+
+        </para>
+    </section>        
+                
+    <section>
+        <title>Változók értékének felcserélése</title>
+        <para>
+            Írj olyan C programot, amely felcseréli két változó értékét, bármiféle logikai utasítás vagy kifejezés
+            nasználata nélkül!
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/08/28/10_begin_goto_20_avagy_elindulunk">https://bhaxor.blog.hu/2018/08/28/10_begin_goto_20_avagy_elindulunk</link>
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/csere.c">itt</link>     
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+			
+			Ennek a legegyszerűbb módja, ha matematikai művelettel cseréljük fel a két változó értékét. Én itt összeadás és kivonás segítségével hajtottam ezt végre, de ugyanúgy lehetséges szorzás/osztással is. 
+            Az én verzióm lényege, hogy megadom a programnak "a" és "b" értékét, jelen esetben 10 és 5. Majd "a" értékét átírom "a" és "b" összegére így "a" értéke jelenleg 15. Következő lépésben "b" értékének megadom, hogy "a" és "b" különbsége legyen, tehát 15-5, így a "b" értéke már 10, tehár féig megvagyunk. 
+            Az utolsó lépés, hogy "a" értékét ismét átiratom a programmal az a=a-b művelettel, azaz 15-10, így a értéke 5 lesz. Szóval a két változó értékét egyszerűen három matematikai művelettel felcseréltem.
+
+        </para>
+    </section>                     
+
+    <section>
+        <title>Labdapattogás</title>
+        <para>
+            Először if-ekkel, majd bármiféle logikai utasítás vagy kifejezés
+            nasználata nélkül írj egy olyan programot, ami egy labdát pattogtat a karakteres konzolon! (Hogy mit értek
+            pattogtatás alatt, alább láthatod a videókon.)
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/08/28/labdapattogas">https://bhaxor.blog.hu/2018/08/28/labdapattogas</link>
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/labda.c">https://github.com/SylwerStone/Prog1/blob/master/labda.c</link> 
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+			Kezdésként include-oljuk szükséges headereket. 
+			<programlisting language="c"><![CDATA[
+                WINDOW *ablak;
+                ablak = initscr ();
+            ]]>
+            </programlisting>
+			Ebben a programban, a megjelenítéshez  a 'usleep' és a 'clear' a két legfontosabb függvény. 
+			Ahhoz hogy a labda pattogni tudjon, tudnunk kell hogy mekkora az ablak mérete, ezt az initscr() függvény használatával tudjuk meg.
+			Ezután kell létrehoznunk pár változót, amikben az aktuális pozíciót, az x és y tengelyen lévő lépésközöket, valamint az ablak méretét tároljuk majd.
+			<programlisting language="c"><![CDATA[
+                int x = 0; //x tengelyen lévő jelenlegi pozíció
+                int y = 0; //y tengelyen lévő jelenlegi pozíció
+
+                int xnov = 1; //x tengelyen lévő lépésköz
+                int ynov = 1; //y tengelyen lévő lépésköz
+
+                int mx; //ablak szélessége
+                int my; //ablak magassága
+            ]]>
+			</programlisting>
+			Ezután létrehozunk egy végtelen ciklust, amiben a labdánk 'pattogni' fog.
+			Majd a getmaxyx függvénynek megadjuk az ablakban lévő értékeket, a mvprintw pedig a labdát fogja mozgatni a megadott értékekre.
+			
+			<programlisting language="c"><![CDATA[
+                getmaxyx ( ablak, my , mx );
+                mvprintw ( y, x, "O" );
+            ]]>
+            </programlisting>
+			
+			A labdát mostmár az x és y értékének egyel növelésével tudjuk mozgásra bírni. Ebben játszik szerepet a usleep függvény, mivel ezzel tudjuk állítani, hogy ez milyen gyorsan történjen. (A usleep millisecundumokban számol)
+			A clear függvény pedig törli a labda előző helyzetét és tényleg úgy látjuk mintha pattogna, nem pedig egy csíkot húz maga után.
+			Az ifekkel tudjuk meghatározni azt, hogy az ablak szélénél a labda visszaforduljon, ezt úgy érjük el, hogy a lépésközt -1-el szorozzuk.
+			<programlisting language="c"><![CDATA[
+                if ( x>=mx-1 ) { // elerte-e a jobb oldalt?
+                xnov = xnov * -1;
+                }
+                if ( x<=0 ) { // elerte-e a bal oldalt?
+                        xnov = xnov * -1;
+                }
+                if ( y<=0 ) { // elerte-e a tetejet?
+                        ynov = ynov * -1;
+                }
+                if ( y>=my-1 ) { // elerte-e a aljat?
+                        ynov = ynov * -1;
+                }
+            ]]>
+            </programlisting>
+        </para>
+    </section>                     
+
+    <section>
+        <title>Szóhossz és a Linus Torvalds féle BogoMIPS</title>
+        <para>
+            Írj egy programot, ami megnézi, hogy hány bites a szó a gépeden, azaz mekkora az <type>int</type> mérete.
+            Használd ugyanazt a while ciklus fejet, amit Linus Torvalds a BogoMIPS rutinjában! 
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href=""></link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/szohossz.c"></link>
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat... 
+			<programlisting language="c"><![CDATA[
+			#include <stdio.h>
+
+			int main()
+			{
+				int hossz=0;
+				int n=0x01;
+				do
+				{
+					hossz++;
+				}while(n<<=1);
+				printf("Szohossz: %d bit\n",hossz);
+				return 0;
+			}
+			]]>
+            </programlisting>
+			Hasonló programot írtunk tavaly c++-ban. Ez a program úgynevezett shiftelés segítégével dönti el, hogy hány bitből áll a szó. Tehát addig lépeget míg az első szám 0-a nem lesz. 
+            Ez az ún. BogoMIPS-es shiftelős módszer. A BogoMIPS egy CPU sebességmérő, amit Linus Torvalds, (Linux kernel atyja) írt meg. 
+            Lényegében a program feladata az, hogy leméri mennyi idő alatt fut le, kapunk tőle egy értéket, amely alapján el lehet dönteni, hogy milyen gyors a processzor.
+
+        </para>
+    </section>                     
+
+    <section>
+        <title>Helló, Google!</title>
+        <para>
+            Írj olyan C programot, amely egy 4 honlapból álló hálózatra kiszámolja a négy lap Page-Rank 
+            értékét!
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href=""></link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/pagerank.c"></link>
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+			
+			A PageRank algoritmust Larry Page és Sergey Brin fejlesztették ki 1998-ban. Ez az algoritmus a mai napig a Google keresőmotorjának a legfontosabb része.
+            Ez egy olyan rendszer, amely arról szól, hogy melyik oldal milyen prioritást élvez, és hogy ezek az page-ek melyik másik page-re mutatnak. 
+            Így tudja az algoritmus meghatárzoni, hogy melyik az a legrelevánsabb oldal amely keresésünknek legjobban megfelel.
+			Ez a kód ezt az algoritmus mutatja be, viszont csak egy 4 weblapos hálózaton.
+			
+			A weboldalak kapcsolatát egy mátrixban tároljuk el.
+			<programlisting language="c"><![CDATA[
+			double L[4][4] = {
+			{0.0, 0.0, 1.0 / 3.0, 0.0},
+			{1.0, 1.0 / 2.0, 1.0 / 3.0, 1.0},
+			{0.0, 1.0 / 2.0, 0.0, 0.0},
+			{0.0, 0.0, 1.0 / 3.0, 0.0}
+			]]>    
+            </programlisting>
+			
+			Ezt a mátrixot megkapja a pagerank függvény argumentumként.
+			<programlisting language="c"><![CDATA[
+			void
+			pagerank(double T[4][4]){
+				double PR[4] = { 0.0, 0.0, 0.0, 0.0 }; 
+				double PRv[4] = { 1.0/4.0, 1.0/4.0, 1.0/4.0, 1.0/4.0}; 
+				
+				int i, j;
+				
+				for(;;){
+					
+							
+					
+					for (i=0; i<4; i++){
+						PR[i]=0.0;
+						for (j=0; j<4; j++){
+							PR[i] = PR[i] + T[i][j]*PRv[j];
+						}
+					}
+				
+						if (tavolsag(PR,PRv,4) < 0.0000000001) 
+							break;
+					
+					
+						
+						for (i=0;i<4; i++){
+							PRv[i]=PR[i];
+						}	
+				}
+				
+				kiir (PR, 4);
+						]]>    
+			</programlisting>
+			A 'PRv' blockban az oldalak első, eredeti értékét tároljuk, a PR blockban pedig a mátrixműveletet tároljuk. Ez a mátrixművelet egy szorzás, amely az 'L' és a 'Prv' block szorzását jelenti.
+			Ennek a szorzásnak az eredményeként kapjuk meg az oldalak pagerank értékét.
+			A 'kiir' fügvénnyel íratjuk ki egyenként a weboldalak eredményét.
+			<programlisting language="c"><![CDATA[
+                void
+                kiir (double tomb[], int db){
+	
+                    int i;
+	
+                    for (i=0; i<db; ++i){
+                        printf("%f\n",tomb[i]);
+                    }
+                }
+            ]]>
+            </programlisting>
+
+        </para>
+    </section>
+
+    <section xml:id="Brun">
+        <title>100 éves a Brun tétel</title>
+        <para>
+            Írj R szimulációt a Brun tétel demonstrálására!
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://youtu.be/xbYhp9G6VqQ">https://youtu.be/xbYhp9G6VqQ</link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/blob/master/attention_raising/Primek_R">https://gitlab.com/nbatfai/bhax/blob/master/attention_raising/Primek_R</link>
+			
+			A Brun tétel azt mondja, hogy az ikerprimek reciprokösszege egy bizonyos összeghez konvergál, szóval közel ér hozzájuk, de soha nem éri el magát a számot.
+			A Tételt Viggo Brun, norvég matematikus dolgozta ki.
+
+        </para>
+    </section>
+    
+    <section xml:id="bhax-textbook-feladatok-turing.MontyHall">
+        <title>A Monty Hall probléma</title>
+        <para>
+            Írj R szimulációt a Monty Hall problémára!
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2019/01/03/erdos_pal_mit_keresett_a_nagykonyvben_a_monty_hall-paradoxon_kapcsan">https://bhaxor.blog.hu/2019/01/03/erdos_pal_mit_keresett_a_nagykonyvben_a_monty_hall-paradoxon_kapcsan</link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/MontyHall_R">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/MontyHall_R</link>
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+			
+			A Monty Hall probléma alapja egy amerikai tv show (Let's Make a Deal), amely arról szól, hogy a játék végén mutatnak a játékosnak 3 ajtót. A 3 ajtó közül kettő mögött nincs semmi, vagy csak egy értéktelen tárgy  van, 1 mögött viszont értékes nyeremény.
+            A játékos választ egy ajtót, de még nem nyitják ki, hanem a műsorvezető kinyitja az egyik olyan ajtót, ami mögött nem az értékes nyeremény van. Ekkora a játékos eldöntheti, hogy szeretne e változtatni döntésén és kinyitni a másik ajtót, vagy marad a választottjánál.
+            Itt felmerül a kérdés, hogy egyáltalán megéri-e váltani. A válasz meglepő módon igen. Ez azért paradoxon, mert ellentmond a józan paraszti észnek. Mivel elvileg mikor rábökünk egy ajtóra akkor 1/3-ad az esélye, hogy jóra mutattunk, ezen nem változtat ha változtatunk.
+            Vagy mégis? Mikor rámutattunk egy ajtóra még 2/3 valószínűséggel nem volt mögötte semmi, viszont kinyitották az egyik üres ajtót. Innentől biztos, hogy a nyeremény az egyik ajtó mögött van. Tehát így a nyeremény 2/3-ad eséllyes a másik ajtó mögött van.
+       
+            Először meg kell adnunk hogy hány kisérlet lesz. Ezt randommá a "sample" fügvénnyel tesszük, amelynek meg kell adni, hogy hánytól hányig generáljon számokat és hogy hányszor tegye ezt. A replace=T pedig megengedi az ismétlődést a számoknál.
+            Az adatokat különböző blockokban tároljuk. A 'kiserlet' blockban azt tároljuk, hogy mikor, hová melyik ajtó mögött található a díj, a 'jatekos' blockban pedog a játékos döntését tároljuk.
+            A 'musorvezeto' függ a nyeremény helyzetétől és hogy a player mit választ.
+            Egy for ciklussal végignézzük az összes játékot, az if segítségével dönti el a műsörvezető, hogy melyik ajtót kell kinyitnia. Az if föggvényünk egyik érsze azt nézi meg, hogy a játékos, jól választott-e, tehát azt az ajtót, ahol a fődíj van.
+            Ha jól választott a 'mibol' a másik két ajtó egyike lesz, ha viszont nem jól választott, akkor az else azt mondja, hogy azt az ajtót legyen ami mögött nem a nyeremény van és amit nem a játékos választott.
+            Ha ez megvan, ezt az információt műsörvezető megkapja és egy üres ajtót fog kinyitni.
+            Most jön a játékos, hogy akar-e változtatni a döntésén. A 'nemvaltoztatesnyer' akkor vesz csak fel értéket, ha a játékos jól választott és úgy dönt, hogy nem is választ másik ajtót. Ha viszont üres ajtóra mutatott, és úgy határoz hogy változtat, akkor kelleni fog a for ciklus ismét.
+            A 'holvalt' annak az ajtónak az értéke, se a műsörvezető nem nyitott ki, és a játékos sem válaszotta, majd ezt az értéket veszi át a 'valtoztat' tömb.
+            Megnézi, hogy a játékos által kiválasztott ajtó és a nyertes ajtó megegegyezik-e, és ha igaz értéket kap, akkor a 'valtoztatesnyer' íródik ki.
+            Végül a 'valtoztatesnyer' és a 'nemvaltoztatesnyer' hosszát meg kell néznünk, hogy el tudjuk dönteni, hogy melyik a melyik a nagyobb.
+        </para>
+    </section>
+
+</chapter>                

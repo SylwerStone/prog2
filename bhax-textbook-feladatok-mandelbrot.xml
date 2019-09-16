@@ -1,0 +1,263 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Mandelbrot!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>A Mandelbrot halmaz</title>
+        <para>
+                
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása: https://github.com/SylwerStone/Prog1/blob/master/mandelbrot.cpp              
+        </para>
+		<para>
+            Tanulságok, tapasztalatok, magyarázat:
+		</para>
+		<para>
+			A Mandelbrot halmaz felfedezője Benoît Mandelbrot volt, akiről a halmaz a nevét is kapta. A Mandelbrot halmaz elemei a komplex számok.
+            Ha ezeket a komplex számokat ábrázoljuk, a komplex számsíkon, akkor különös formájú alakzatokat kapunk. 
+			A fenti c++ programmal tudjuk ezt megtenni, amely egy ábrát készít nekünk.
+			Nézzük meg a programot:
+			Először is include-oljuk a szükséges header fájlokat, aztán meg kell adnunk, hogy melyik fájlba szeretnénk menteni a képet, ha ezt nem adjuk meg kapunk egy hibaüzenetet.
+			<programlisting language="c"><![CDATA[
+#include <iostream>
+#include "png++/png.hpp"
+
+int main (int argc, char *argv[])
+{
+    if (argc != 2) {
+        std::cout << "Hasznalat: ./mandelpng fajlnev";
+        return -1;
+    }
+]]>    
+</programlisting>
+Ezután megadunk egy értékkészletet a függvénynek, valamint megadjuk hogy milyen magas és széles legyen a képünk. Meg kell adnunk még az iterációs határt is.		
+<programlisting language="c"><![CDATA[
+double a = -2.0, b = .7,  c = -1.35, d = 1.35;
+    int szelesseg = 600, magassag = 600, iteraciosHatar = 1000;
+]]>    
+</programlisting>
+Ezután létrehozzuk a png fájl-t amibe majd a mandelbrot halamaz kerül berajzolásra
+<programlisting language="c"><![CDATA[
+png::image <png::rgb_pixel> kep (szelesseg, magassag);
+]]>    
+</programlisting>
+Ezután a program végigmegy a koordináta rendszer pontjain
+<programlisting language="c"><![CDATA[
+ double dx = (b-a)/szelesseg;
+    double dy = (d-c)/magassag;
+    double reC, imC, reZ, imZ, ujreZ, ujimZ;
+   
+    int iteracio = 0;
+    std::cout << "Szamitas";
+   
+    for (int j=0; j<magassag; ++j) {
+        //sor = j;
+        for (int k=0; k<szelesseg; ++k) {
+        
+            reC = a+k*dx;
+            imC = d-j*dy;
+            // z_0 = 0 = (reZ, imZ)
+            reZ = 0;
+            imZ = 0;
+            iteracio = 0;
+       
+            while (reZ*reZ + imZ*imZ < 4 && iteracio < iteraciosHatar) {
+                // z_{n+1} = z_n * z_n + c
+                ujreZ = reZ*reZ - imZ*imZ + reC;
+                ujimZ = 2*reZ*imZ + imC;
+                reZ = ujreZ;
+                imZ = ujimZ;
+                
+                ++iteracio;
+                       
+]]>    
+</programlisting>
+Meg kell adnunk valamilyen színt a pixeleknek, aztán berajzoljuk a kapott Mandelbrot-halmazt abba az üres képfájlba, amit az elején létrehoztunk.
+<programlisting language="c"><![CDATA[
+kep.set_pixel(k, j, png::rgb_pixel(255-iteracio%256,
+                                               255-iteracio%256, 255-iteracio%256));
+        }
+        std::cout << "." << std::flush;
+    }
+    
+    kep.write (argv[1]);
+    std::cout << argv[1] << " mentve" << std::endl;
+}
+]]>    
+</programlisting>
+
+        </para>
+    </section>        
+        
+    <section>
+        <title>A Mandelbrot halmaz a <filename>std::complex</filename> osztállyal</title>
+        <para>
+                
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+		<para>
+            Tanulságok, tapasztalatok, magyarázat:
+			Ez a program annyiben különbözik az előzőtől, hogy megadhatunk 8 paramétert parancssori argumentumként (Ha nem adjuk meg, akkor az alapértelmezettet fogja használni), 
+			illetve itt két változó helyett csupán egyet használunk a komplex számok tárolához. Valamint ennél színesebb ábrát fogunk kapni mint az előzőnél.
+            Ehhez csupán a complex könyvtárra van szükségünk és máris spóroltunk magunknak 1 változót.
+<programlisting language="c"><![CDATA[
+       // c = (reC, imC) a halo racspontjainak
+          // megfelelo komplex szam
+
+          reC = a + k * dx;
+          imC = d - j * dy;
+          std::complex<double> c ( reC, imC );
+
+          std::complex<double> z_n ( 0, 0 );
+          iteracio = 0;
+
+          while ( std::abs ( z_n ) < 4 && iteracio < iteraciosHatar )
+            {
+              z_n = z_n * z_n + c;
+
+              ++iteracio;
+]]>    
+</programlisting>	
+			Amit még tud a program, hogy %-ban látjuk a folyamat állapotát.
+<programlisting language="c"><![CDATA[
+ int szazalek = ( double ) j / ( double ) magassag * 100.0;
+      std::cout << "\r" << szazalek << "%" << std::flush;
+
+]]>    
+</programlisting>		
+        </para>
+    </section>        
+                
+    <section>
+        <title>Biomorfok</title>
+        <para>
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://youtu.be/IJMbgRzY76E">https://youtu.be/IJMbgRzY76E</link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/Biomorf">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/Biomorf</link>
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+		</para> 
+		<para>
+			A Biomorfokat Clifford A. Pickover fedezte fel, a Julia halmaz kutatása
+			alatt. Ugyanis megírt egy programot, az el˝obb említett halmaz megjelenítésére, ám a programkódban
+			volt valami hiba. Ezáltal a hiba által fedezte fel ezeket az úgynevezett biomorfokat. A Julia halmaz egyébként
+			részhalmaza a Mandelbrot halmaznak, annyi különbséggel, hogy míg a Juliában a "c" konstansként
+			szerepel, addig a Mandelbrotban már változóként.
+		</para>	
+		<para>
+			Nézzük a programot:
+			Include-oljuk kezdésként a szükséges headereket.
+			Itt látjuk, hogy 8 helyett már 10 parancssori argumentumunk van, amiket itt sem kötelező megadni, szimplán az alapértelmezett értékeket fogja használni a program.
+			<programlisting language="c"><![CDATA[
+    {
+        szelesseg = atoi ( argv[2] );
+        magassag =  atoi ( argv[3] );
+        iteraciosHatar =  atoi ( argv[4] );
+        xmin = atof ( argv[5] );
+        xmax = atof ( argv[6] );
+        ymin = atof ( argv[7] );
+        ymax = atof ( argv[8] );
+        reC = atof ( argv[9] );
+        imC = atof ( argv[10] );
+        R = atof ( argv[11] );
+
+    }
+    else
+    {
+        std::cout << "Hasznalat: ./3.1.2 fajlnev szelesseg magassag n a b c d reC imC R" << std::endl;
+        return -1;
+    }
+
+]]>    
+</programlisting>
+Ezután hozzuk létre az üres png-t, valamint azt, hogy mekkora lépésközünk legyen.
+<programlisting language="c"><![CDATA[
+ png::image < png::rgb_pixel > kep ( szelesseg, magassag );
+
+    double dx = ( xmax - xmin ) / szelesseg;
+    double dy = ( ymax - ymin ) / magassag;
+
+]]>    
+</programlisting> 
+Mint mondtam, a c konstansként szerepel, ezét a cc a cikluson kívül van.
+<programlisting language="c"><![CDATA[
+ std::complex<double> cc ( reC, imC );
+]]>    
+</programlisting>	
+Ez az a bug, ami miatt létrejött a program:
+<programlisting language="c"><![CDATA[
+if(std::real ( z_n ) > R || std::imag ( z_n ) > R)
+]]>    
+</programlisting>	
+Végül ugyan azt csináljuk mint az előző programoknál: beállítjuk a pixelek színét és kiíratjuk 1 fájlba.
+<programlisting language="c"><![CDATA[
+ kep.set_pixel ( x, y,
+                            png::rgb_pixel ( (iteracio*20)%255, (iteracio*40)%255, (iteracio*60)%255 ));
+        }
+
+        int szazalek = ( double ) y / ( double ) magassag * 100.0;
+        std::cout << "\r" << szazalek << "%" << std::flush;
+    }
+
+    kep.write ( argv[1] );
+    std::cout << "\r" << argv[1] << " mentve." << std::endl;
+
+]]>    
+</programlisting>
+        </para>                        
+    </section>                     
+
+    <section>
+        <title>A Mandelbrot halmaz CUDA megvalósítása</title>
+        <para>
+        </para>
+        <para>
+            Megoldás videó: 
+        </para>
+        <para>
+            Megoldás forrása:  
+        </para>
+    </section>                     
+
+    <section>
+        <title>Mandelbrot nagyító és utazó C++ nyelven</title>
+        <para>
+            Építs GUI-t a Mandelbrot algoritmusra, lehessen egérrel nagyítani egy területet, illetve egy pontot
+            egérrel kiválasztva vizualizálja onnan a komplex iteréció bejárta z<subscript>n</subscript> komplex számokat!
+        </para>
+            
+        <para>
+            Megoldás forrása:  
+        </para>
+
+        <para>
+            Megoldás videó: 
+        </para>
+        <para>
+            Megoldás forrása:  
+        </para>
+    </section>                     
+                                                                                                                                                                            
+    <section>
+        <title>Mandelbrot nagyító és utazó Java nyelven</title>
+        <para>
+        </para>
+    </section>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+</chapter>                

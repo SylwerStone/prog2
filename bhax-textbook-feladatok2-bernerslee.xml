@@ -1,0 +1,116 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Berners-Lee!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+
+    <section>
+        <title>
+          Java és C++ összehasonlítása
+        </title>
+        <para>
+          C++: Benedek Zoltán, Levendovszky Tihamér Szoftverfejlesztés C++ nyelven
+          Java: Nyékyné Dr. Gaizler Judit et al. Java 2 útikalauz programozóknak 5.0 I-II.
+        </para>
+
+     
+
+      <para>
+        A Javát 1991-ben fejlesztették, amely a Sun Microsystems nevéhez fűződik, fő fejlesztője James Gosling, akit a java atyjaként is emlegetnek. Először a nyelvet otthoni
+        elektromos eszközök (pl TV) programozására akarták használni, de ez túlmutatott az akkori technológián. A nyelv szintaxisát direkt a C és C++-hoz hasonlóra tervezték, hogy akik ismerték ezt a két nyelvet könnyeb legyen eligazodniuk benne. A nyelv elnevezése egy kávé nevéből eredeztethető.
+      </para>
+
+      <para>
+        Hasonlóságok: 
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>Nagyon hasonló a két nyelv szintaxisa</para>
+        </listitem>
+        <listitem>
+          <para>Mindkét nyelvben 'main' function-ben kezdődik a program végrahájtása</para>
+        </listitem>
+        <listitem>
+          <para>Az elágazások és loopok szintén hasonlítanak</para>
+        </listitem>
+        <listitem>
+          <para>A kommentelés a két nyelvben azonos módon működik</para>
+        </listitem>
+        <listitem>
+          <para>Több szálon tudunk futtatni dolgokat mindkét nyelvben</para>
+        </listitem>
+      </itemizedlist>
+        <para> 
+		Természetesen eltérések is vannak:
+		</para>    
+		
+		<para>
+		Általánosságban elmondható, hogy a Java inkább a platformfüggetlenséget és
+        implementációindependenciát részesíti előnyben, a C++ nál minden a programozóra van bízva, 
+		és a fő célja a maximális hatékonyság elérése.
+		</para>
+		<para>
+		Nagy különbség, hogy a C++-al ellentétben, a Javában nincsenek külön objektumok és a címükre mutató
+        mutatók, hanem mindig referenciákon keresztül érjük el őket.
+		</para>
+		<para>
+		A hordozhatósága is eltérő a két nyelvnek. A C++ források
+        hordozhatóak, viszont a már lefordított fájlok nem. Ezzel szemben a Java jobb hordozhatósággal rendelkezik, mivel nem csak a forrásokat,
+        hanem a már lefordított programok is futtathatóak más gépen. Ezt
+        egy Java virtuális gép alkalmazása teszi lehetővé.</para>
+		<para>
+		A memóriakezelés is máshogy megy végbe. 
+		A C++-nál három memóriakezelés létezik : statikus,
+        automatikus, és dinamikus. 
+		A Javaban viszont minden memóriaelérés 
+        hivatkozásokon keresztül történik. </para>
+		<para>  
+		C++-ban az osztálydeklarációk a végére pontosvesszőt kell
+        raknunk, Java-ban viszont nem.</para>
+		
+
+
+
+
+
+        
+    </section>        
+
+    <section>
+        <title></title>
+        <para>
+          Python: Forstner Bertalan, Ekler Péter, Kelényi Imre: Bevezetés a mobilprogramozásba. (35-51. oldalak)
+        </para>
+
+      <para>
+        A Python egy általános célú programozás nyelv, amit Guido von Rossum 1990-ben alkottott meg
+        és 1991-ben hozta nyilvánosságra. A Python egy objektum orientált, platformfüggetlen nyelv. 
+		Leginkább prototípúsok megírására és tesztelésére használják, leginkább mobilalkalmazásoknál, de egyszerűbb programok megírására is alkalmas. 
+        Python-ban, a C, és Java nyelvekkel ellentétben, nem kell külön lefordítanunk a programot, amit írunk.Elég a Python forrást megadni az
+		interpreternek, és lefut a program. 
+
+        
+      </para>
+
+      <para>
+        A C alapú nyelvek után a Python szintaxisa elsőre fura lehet, ugyanis a Python nyelv behúzásalapú nyelv. 
+        Ez azt jelenti, hogy az állításokat a különböző szintű behúzásokkal tudjuk csoportosítani. Nem kell a kapcsos
+		zárójeleket, vagy a begin-end kifejezéset használni. Fontos, hogy a behúzásoknak egységesnek kell lenniük, mindenhol vagy TAB-ot vagy SPACE-t használjunk.
+		A kommentelés is eltérő a C-alapú nyelvekné megszokottnál, // helyet a # jelet használunk a
+        kommentek írására. Pontosvesszőt nem kell használnunk, mert minden utasítás csak 
+        az adott sor végéig tart. Ha ez mondjuk nem fér ki egy sorba, akkor ezt tudjuk a Pythonban egy '\' jellel jelezni, hogy a következő sorban folytatódik az utasítás.
+		A Pythonban előforduló adattípúsok lehetnek: számok, sztringek, ennesek (tuples, n-es), listák vagy szótárak (dictionaries).
+		tt is létezik kivételkezelés, melynek a try és except a kulcsszavai.
+		A Pythonban is megtalálható pl az if elágazás és a while vagy for ciklus is.
+      </para>
+      <para>
+        
+        
+      </para>
+        
+    </section>        
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+</chapter>                

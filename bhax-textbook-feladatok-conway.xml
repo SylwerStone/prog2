@@ -1,0 +1,366 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Conway!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>Hangyaszimulációk</title>
+        <para>
+            Írj Qt C++-ban egy hangyaszimulációs programot, a forrásaidról utólag reverse engineering jelleggel
+            készíts UML osztálydiagramot is!
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/10/10/myrmecologist">https://bhaxor.blog.hu/2018/10/10/myrmecologist</link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/Myrmecologist">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/Myrmecologist</link>
+             
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat.
+            Ez a program egy ún. "hangyabojt" szimulál, vagyis a hangyákat és azok útjait.
+            Az "Ant" class a hangya tulajdonságait tartalmazza: Kordináták (x, y), hova tart (dir)
+			<programlisting language="c++"><![CDATA[
+class Ant
+{
+
+public:
+    int x;
+    int y;
+    int dir;
+
+    Ant(int x, int y): x(x), y(y) {
+        
+        dir = qrand() % 8;
+        
+    }
+
+};
+
+typedef std::vector<Ant> Ants;
+
+]]>    
+</programlisting>
+            
+            Az "Antwin" classben az ablak magasságát és szélességét, a hangyákat tartalamzó cellák magasságát szélességét tároljuk. A "keyPressEvent" a gomblenyomásokat kezeli, a "closeEVent" az ablak bezárásáért felelős, a "paintEvent" pedig a hangyák színeit alakítja.
+    <programlisting language="c++"><![CDATA[
+class AntWin : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    AntWin(int width = 100, int height = 75,
+           int delay = 120, int numAnts = 100,
+           int pheromone = 10, int nbhPheromon = 3,
+           int evaporation = 2, int cellDef = 1,
+           int min = 2, int max = 50,
+           int cellAntMax = 4, QWidget *parent = 0);
+
+    AntThread* antThread;
+
+    void closeEvent ( QCloseEvent *event ) {
+
+        antThread->finish();
+        antThread->wait();
+        event->accept();
+    }
+
+    void keyPressEvent ( QKeyEvent *event )
+    {
+
+        if ( event->key() == Qt::Key_P ) {
+            antThread->pause();
+        } else if ( event->key() == Qt::Key_Q
+                    ||  event->key() == Qt::Key_Escape ) {
+            close();
+        }
+
+    }
+
+    virtual ~AntWin();
+    void paintEvent(QPaintEvent*);
+
+private:
+
+    int ***grids;
+    int **grid;
+    int gridIdx;
+    int cellWidth;
+    int cellHeight;
+    int width;
+    int height;
+    int max;
+    int min;
+    Ants* ants;
+
+public slots :
+    void step ( const int &);
+
+};
+
+]]>    
+</programlisting>        
+            Az AntThread-ben tároljuk például a hangyák számát egy cellában, az evaporation mennyiségét, a pheromonok számát. Itt található meg a run és a finish funkció is. 
+            Itt taláható még az  "isRunning" függvény, amely a nevéből következtethetően megnézi, hogy fut-e aztán visszaad egy igaz vagy hamis értéket. 
+            Pár privát függvény pl: a "newDir" (Új irány a hangyáknak), a "moveAnts" (Hangyák mozgatása) és a "setPheromone" (Pheromone mennyisége beállítása) 
+ <programlisting language="c++"><![CDATA[
+class AntThread : public QThread
+{
+    Q_OBJECT
+
+public:
+    AntThread(Ants * ants, int ***grids, int width, int height,
+             int delay, int numAnts, int pheromone, int nbrPheromone, 
+             int evaporation, int min, int max, int cellAntMax);
+    
+    ~AntThread();
+    
+    void run();
+    void finish()
+    {
+        running = false;
+    }
+
+    void pause()
+    {
+        paused = !paused;
+    }
+
+    bool isRunnung()
+    {
+        return running;
+    }
+
+private:
+    bool running {true};
+    bool paused {false};
+    Ants* ants;
+    int** numAntsinCells;
+    int min, max;
+    int cellAntMax;
+    int pheromone;
+    int evaporation;
+    int nbrPheromone;
+    int ***grids;
+    int width;
+    int height;
+    int gridIdx;
+    int delay;
+    
+    void timeDevel();
+
+    int newDir(int sor, int oszlop, int vsor, int voszlop);
+    void detDirs(int irany, int& ifrom, int& ito, int& jfrom, int& jto );
+    int moveAnts(int **grid, int row, int col, int& retrow, int& retcol, int);
+    double sumNbhs(int **grid, int row, int col, int);
+    void setPheromone(int **grid, int row, int col);
+
+signals:
+    void step ( const int &);
+
+};
+
+]]>    
+</programlisting>               
+        </para>            
+    </section>        
+    <section>
+        <title>Java életjáték</title>
+        <para>
+            Írd meg Java-ban a John Horton Conway-féle életjátékot, 
+            valósítsa meg a sikló-kilövőt!
+        </para>
+        <para>
+            Megoldás videó: 
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apb.html#id564903">https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apb.html#id564903</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>            
+    </section>        
+    <section>
+        <title>Qt C++ életjáték</title>
+        <para>
+            Most Qt C++-ban!
+        </para>
+        <para>
+            Megoldás videó: 
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://gitlab.com/kissmarcell98/bhax/tree/master/attention_raising/QT">https://gitlab.com/kissmarcell98/bhax/tree/master/attention_raising/QT</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+    
+            Az életjáték John Conway nevéhez fűződik, aki a Cambridge egyetem egyik matematikusa volt. A játék egy ún. 'nullszemélyes' játék, tehát a játékos feladata szimplán annyiben kimerül, hogy egy kezdőalakzatot megad majd figyeli a történéseket.
+            A "játék" lépéseinek eredményét a számítógép számolja, tehát a 'játékosnak' úgymond semmi teendője nincs a kezdőalakzat kiválasztásán kívül.
+			A játék szabályai:
+			A sejt ha 2 vagy 3 szomszédja van túléli a kört. A sejt, ha kettőnél kevesebb, vagy háromnál több szomszédja van akkor elpusztul. Új sejt akkor keletkezik, ha egy üres cellának pontosan 3 szomszédja van.
+			A 'sejtablak.h'-ban és a 'sejtablak.cpp'-ben megtalálható a SejtAblak class, ami azért felelős, hogy a programunk kirajzolódjon.
+  <programlisting language="c++"><![CDATA[
+#include <QtGui/QMainWindow>
+#include <QPainter>
+#include "sejtszal.h"
+
+class SejtSzal;
+
+class SejtAblak : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    SejtAblak(int szelesseg = 100, int magassag = 75, QWidget *parent = 0);
+    ~SejtAblak();
+    // Egy sejt lehet élõ
+    static const bool ELO = true;
+    // vagy halott
+    static const bool HALOTT = false;
+    void vissza(int racsIndex);
+
+protected:
+    // Két rácsot használunk majd, az egyik a sejttér állapotát
+    // a t_n, a másik a t_n+1 idõpillanatban jellemzi.
+    bool ***racsok;
+    // Valamelyik rácsra mutat, technikai jellegû, hogy ne kelljen a
+    // [2][][]-ból az elsõ dimenziót használni, mert vagy az egyikre
+    // állítjuk, vagy a másikra.
+    bool **racs;
+    // Megmutatja melyik rács az aktuális: [rácsIndex][][]
+    int racsIndex;
+    // Pixelben egy cella adatai.
+    int cellaSzelesseg;
+    int cellaMagassag;
+    // A sejttér nagysága, azaz hányszor hány cella van?
+    int szelesseg;
+    int magassag;    
+    void paintEvent(QPaintEvent*);
+    void siklo(bool **racs, int x, int y);
+    void sikloKilovo(bool **racs, int x, int y);
+
+private:
+    SejtSzal* eletjatek;
+
+};]]>
+            </programlisting>
+A 'sejtszal.cpp' és 'sejtszal.h'-ban pedig a SejtSzal class található meg, ami a szabályokat tartalmazza. Tehát ez alapján jön létre új sejt, hal meg egy, vagy éppen marad életben
+<programlisting language="c++"><![CDATA[
+#ifndef SEJTSZAL_H
+#define SEJTSZAL_H
+
+#include <QThread>
+#include "sejtablak.h"
+
+class SejtAblak;
+
+class SejtSzal : public QThread
+{
+    Q_OBJECT
+
+public:
+    SejtSzal(bool ***racsok, int szelesseg, int magassag,
+             int varakozas, SejtAblak *sejtAblak);
+    ~SejtSzal();
+    void run();
+
+protected:
+    bool ***racsok;
+    int szelesseg, magassag;
+    // Megmutatja melyik rács az aktuális: [rácsIndex][][]
+    int racsIndex;
+    // A sejttér két egymást követõ t_n és t_n+1 diszkrét idõpillanata
+    // közötti valós idõ.
+    int varakozas;
+    void idoFejlodes();
+    int szomszedokSzama(bool **racs,
+                        int sor, int oszlop, bool allapot);
+    SejtAblak* sejtAblak;
+
+};
+]]>    
+</programlisting> 
+A sikókilövő pedig szintén a sejtablak.cpp-ben található meg. Itt egyesével rajzolja ki a sejteket a megadott koordinátákra.
+<programlisting language="c++"><![CDATA[
+void SejtAblak::sikloKilovo(bool **racs, int x, int y) {
+
+    racs[y+ 6][x+ 0] = ELO;
+    racs[y+ 6][x+ 1] = ELO;
+    racs[y+ 7][x+ 0] = ELO;
+    racs[y+ 7][x+ 1] = ELO;
+
+    racs[y+ 3][x+ 13] = ELO;
+
+    racs[y+ 4][x+ 12] = ELO;
+    racs[y+ 4][x+ 14] = ELO;
+
+    racs[y+ 5][x+ 11] = ELO;
+    racs[y+ 5][x+ 15] = ELO;
+    racs[y+ 5][x+ 16] = ELO;
+    racs[y+ 5][x+ 25] = ELO;
+
+    racs[y+ 6][x+ 11] = ELO;
+    racs[y+ 6][x+ 15] = ELO;
+    racs[y+ 6][x+ 16] = ELO;
+    racs[y+ 6][x+ 22] = ELO;
+    racs[y+ 6][x+ 23] = ELO;
+    racs[y+ 6][x+ 24] = ELO;
+    racs[y+ 6][x+ 25] = ELO;
+
+    racs[y+ 7][x+ 11] = ELO;
+    racs[y+ 7][x+ 15] = ELO;
+    racs[y+ 7][x+ 16] = ELO;
+    racs[y+ 7][x+ 21] = ELO;
+    racs[y+ 7][x+ 22] = ELO;
+    racs[y+ 7][x+ 23] = ELO;
+    racs[y+ 7][x+ 24] = ELO;
+
+    racs[y+ 8][x+ 12] = ELO;
+    racs[y+ 8][x+ 14] = ELO;
+    racs[y+ 8][x+ 21] = ELO;
+    racs[y+ 8][x+ 24] = ELO;
+    racs[y+ 8][x+ 34] = ELO;
+    racs[y+ 8][x+ 35] = ELO;
+
+    racs[y+ 9][x+ 13] = ELO;
+    racs[y+ 9][x+ 21] = ELO;
+    racs[y+ 9][x+ 22] = ELO;
+    racs[y+ 9][x+ 23] = ELO;
+    racs[y+ 9][x+ 24] = ELO;
+    racs[y+ 9][x+ 34] = ELO;
+    racs[y+ 9][x+ 35] = ELO;
+
+    racs[y+ 10][x+ 22] = ELO;
+    racs[y+ 10][x+ 23] = ELO;
+    racs[y+ 10][x+ 24] = ELO;
+    racs[y+ 10][x+ 25] = ELO;
+
+    racs[y+ 11][x+ 25] = ELO;
+
+}
+]]>    
+</programlisting>      			
+        </para>            
+    </section>        
+    <section>
+        <title>BrainB Benchmark</title>
+        <para>
+        </para>
+        <para>
+            Megoldás videó: 
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/nbatfai/esport-talent-search">https://github.com/nbatfai/esport-talent-search</link>           
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+            
+            A BrainB Benchmark azt teszteli, hogy mennyire tudunk figyelni a karakterünkre, mennyi idő alatt veszítjük el, illetve ha elveszítettük, mennyi idő alatt találjuk meg újból. 
+            A feladat annyi, hogy a kurzort rajta kell tartanunk a saját "karakterünkön", ám eközben egyre több másik "new" karakter jelenik meg, így nehezedik egyre jobban a dolgunk. Ha elveszítjük a karaktert, akkor kevesebb új karakter jelenik meg, hogy könnyebb legyen megtalálni az eredetit.
+            A folyamat 10 percig tart, majd a végén megkapod az eredményt. Ezeket az eredményeket összehasonlítva tudjuk összehasonlítani egyes egyének képességeit pl. Esport játékokan.
+        </para>            
+    </section>        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+</chapter>                

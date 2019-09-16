@@ -1,0 +1,315 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Caesar!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title><type>int **</type> háromszögmátrix</title>
+        <para>
+           
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://gitlab.com/nbatfai/bhax/blob/master/thematic_tutorials/bhax_textbook_IgyNeveldaProgramozod/Caesar/tm.c">https://gitlab.com/nbatfai/bhax/blob/master/thematic_tutorials/bhax_textbook_IgyNeveldaProgramozod/Caesar/tm.c</link>                      
+        </para>
+        <para>
+            
+			Tanulságok, tapasztalatok, magyarázat:
+            
+			
+        </para>            
+    </section>        
+    <section>
+        <title>C EXOR titkosító</title>
+        <para>
+            Írj egy EXOR titkosítót C-ben!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/e.c">https://github.com/SylwerStone/Prog1/blob/master/e.c</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+			
+            Kezdésnek szokás szerint include-oljuk a szükséges headereket, majd define-oljuk a buffer méretet (256) és a maximum kulcsot (100).
+            A mainben fellelhető 'argc' és 'argv' argumentumokat és azok számát tárolja.
+            Ezután deklarálunk két char típusú tömböt a 'buffer'-t és a 'kulcs'-ot, majd két integer típusú változót a 'kulcs_index'-et és az 'olvasott_bajtok'-at.
+            Aztán deklarálnunk kell még egy integert a 'kulcs_meret'-et, aminek az értéke az argv 2. elemének nagysága lesz.
+            Ezután ezt a 'strncpy' függvénnyel átmásoljuk a kulcs változóba.
+            Ha ezzel megvagyunk a következő lépés, hogy beolvassuk a byte-okat, ameddig a bufferben van elég hely neki (ez 256 byte lesz).
+            Amíg az 'i' kisebb mint az elemenként olvasott byte-ok, azokat a (kulcs[kulcs_index])-el kezeljük.
+            Végül kiíratjuk a kapott byte-okat egy fájlba.
+            
+            
+        </para>            
+    </section>        
+    <section>
+        <title>Java EXOR titkosító</title>
+        <para>
+            Írj egy EXOR titkosítót Java-ban!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/exor.java">https://github.com/SylwerStone/Prog1/blob/master/exor.java</link>
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+			
+            Itt java nyelven írjuk meg ugyan azt az EXOR titkositót.
+            A java egy objektumorientált nyelv, amely szintaxisát a C-től és a C++-tól örökölte, viszont egyszerűbb objektumodellekkel rendelkezik azoknál.
+            A java alkalmazásokat általában bájtkód formájúvá alakitják, de lehet nativ kódot is késziteni belőle.
+            A program ugyan azt csinálja mint az előző c nyelven íródott program.
+            Megkapjuk az adatokat, amelyeket EXOR használatával byte-onként titkosítunk, majd kiíratjuk őket.
+            
+
+        </para>            
+    </section>        
+    <section>
+        <title>C EXOR törő</title>
+        <para>
+            Írj egy olyan C programot, amely megtöri az első feladatban előállított titkos szövegeket!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:  <link xlink:href="https://github.com/SylwerStone/Prog1/blob/master/t.c">https://github.com/SylwerStone/Prog1/blob/master/t.c</link>                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+			
+            Kezdésként szokás szerint include-oljuk a megfelelő headereket, majd definiálnunk kell pár függvényt.
+            Az 'atlagos_szohossz' függvény kiszámolja a bemenet átl. szóhosszát. 
+			<programlisting language="c"><![CDATA[
+			double
+			atlagos_szohossz (const char *titkos, int titkos_meret)
+			{
+				int sz = 0;
+				for (int i = 0; i < titkos_meret; ++i)
+					if (titkos[i] == ' ')
+						++sz;
+
+				return (double) titkos_meret / sz;
+			}
+			]]>    
+			</programlisting>
+            A  tiszta_lehet azt nézi meg, hogy a szöveg amit megetetünk vele, feltört-e vagy nem.
+            A szöveg általában, akkor tiszta, vagy tört ha benne vannak a 'hogy' 'nem' 'az' és a 'ha'szavak, és vizsgáljuk az átlagos szóhosszt is
+			<programlisting language="c"><![CDATA[
+			int
+			tiszta_lehet (const char *titkos, int titkos_meret)
+			{
+				// a tiszta szoveg valszeg tartalmazza a gyakori magyar szavakat
+				// illetve az átlagos szóhossz vizsgálatával csökkentjük a
+				// potenciális töréseket
+
+				double szohossz = atlagos_szohossz (titkos, titkos_meret);
+
+				return szohossz > 6.0 && szohossz < 9.0
+					   && strcasestr (titkos, "hogy") && strcasestr (titkos, "nem")
+					   && strcasestr (titkos, "az") && strcasestr (titkos, "ha");
+
+			}
+			]]>    
+			</programlisting>
+            Ha ennek nem felel meg a szöveg, akkor nem fogjuk tudni feltörni.
+            Következik az exoros eljárás, ahol megkapjuk a 'kulcs'-ot, a 'kulcs_meret'-et, a 'titkos'-t, a 'tikos_meret'-et és a 'buffer'-t.
+			Ezután lefuttatunk egy for ciklust az összes karakteren.
+			<programlisting language="c"><![CDATA[
+			void
+			exor (const char kulcs[], int kulcs_meret, char titkos[], int titkos_meret, char *buffer)
+			{
+
+				int kulcs_index = 0;
+
+				for (int i = 0; i < titkos_meret; ++i)
+				{
+
+					buffer[i] = titkos[i] ^ kulcs[kulcs_index];
+					kulcs_index = (kulcs_index + 1) % kulcs_meret;
+
+			]]>    
+			</programlisting>
+            
+            Aztán következik az exor törés, ami ugyan azokkal az adatokkal dolgozik, mint az előző folyamat.
+			<programlisting language="c"><![CDATA[
+			void
+			exor_tores (const char kulcs[], int kulcs_meret, char titkos[],
+						int titkos_meret)
+			{
+
+				char *buffer;
+
+				if ((buffer = (char *)malloc(sizeof(char)*titkos_meret)) == NULL)
+				{
+					printf("Memoria (buffer) faliora\n");
+					exit(-1);
+				}
+
+				exor (kulcs, kulcs_meret, titkos, titkos_meret, buffer);
+
+				if(tiszta_lehet (buffer, titkos_meret))
+				{
+				  printf("Kulcs: [%c%c%c%c%c%c%c%c]\nTiszta szoveg: [%s]\n",
+						 kulcs[0],kulcs[1],kulcs[2],kulcs[3],kulcs[4],kulcs[5],kulcs[6],kulcs[7], buffer);      
+				}
+				
+				free(buffer);
+
+			]]>    
+			</programlisting>
+            A main függvényben deklarálnunk kell néhány 'char' és egy 'int' típusú változót.
+			<programlisting language="c"><![CDATA[
+			int
+			main (void)
+			{
+				char kulcs[KULCS_MERET];
+				char titkos[MAX_TITKOS];
+				char *p = titkos;
+				int olvasott_bajtok; 
+			]]>    
+			</programlisting>
+            Ezután következik a titkos fájl 'berántása' egy  while ciklussal, majd egy for ciklussal következik a maradék hely nullázása a titkos bufferben.
+			<programlisting language="c"><![CDATA[
+			// titkos fajt berantasa
+			while ((olvasott_bajtok =
+						read (0, (void *) p,
+							  (p - titkos + OLVASAS_BUFFER <
+							   MAX_TITKOS) ? OLVASAS_BUFFER : titkos + MAX_TITKOS - p)))
+				p += olvasott_bajtok;
+
+			// maradek hely nullazasa a titkos bufferben
+			for (int i = 0; i < MAX_TITKOS - (p - titkos); ++i)
+				titkos[p - titkos + i] = '\0';
+			]]>    
+			</programlisting>
+            
+			Ezután következik a 8 db for ciklus, amelyekkel előállítjuk a kulcsokat, majd minddel megpróbáljuk a törést külön külön.
+            Ha valamelyik működik és megfelel a 'tiszta_lehet' függvénynek, akkor kiírja a helyes kulcsot és a feltört szöveget.
+			<programlisting language="c"><![CDATA[
+			 // osszes kulcs eloallitasa
+      //int ii, ji, ki, li, mi, ni, oi, pi; //-5.1-es példa: ezek cikluson kívül definiált változók 
+#pragma omp parallel for private(kulcs,ii, ji, ki, li, mi, ni, oi, pi) share(p, titkos)
+     for (int ii = '0'; ii <= '9'; ++ii)
+        for (int ji = '0'; ji <= '9'; ++ji)
+            for (int ki = '0'; ki <= '9'; ++ki)
+                for (int li = '0'; li <= '9'; ++li)
+                    for (int mi = '0'; mi <= '9'; ++mi)
+                        for (int ni = '0'; ni <= '9'; ++ni)
+                            for (int oi = '0'; oi <= '9'; ++oi)
+                                for (int pi = '0'; pi <= '9'; ++pi)
+                                 {
+				    //printf("%p/n", kulcs); //-5.2-es példa:kulcámának tömbök számának nyomonkövetése
+
+                                    kulcs[0] = ii;
+                                    kulcs[1] = ji;
+                                    kulcs[2] = ki;
+                                    kulcs[3] = li;
+                                    kulcs[4] = mi;
+                                    kulcs[5] = ni;
+                                    kulcs[6] = oi;
+                                    kulcs[7] = pi;
+
+                                    exor_tores (kulcs, KULCS_MERET, titkos, p - titkos);
+                                }
+
+    return 0;
+}
+			]]>    
+			</programlisting>
+
+            
+         
+        </para>            
+    </section>        
+    <section>
+        <title>Neurális OR, AND és EXOR kapu</title>
+        <para>
+            R
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://youtu.be/Koyw6IH5ScQ">https://youtu.be/Koyw6IH5ScQ</link>
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/NN_R">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/NN_R</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+			
+            A neuronok feldata az, hogy valamilyen jeleket továbbítsanak. A neuronoknak 3 rétegük van:
+            - bementi réteg
+            - kimeneti réteg
+            - rejtett réteg
+            A bementi réteg feladata, hogy továbbadja a kapott adatokat a többi résznek.
+            A kimeneti rétegben találhatóak meg a függvények és a kimeneti neuronok.
+            Míg a rejtett részben zaljanak a lényeges folyamatok.
+            A jel továbbítása egy küszöbértéktől függ, ha elérjük ezt a küszöbértéket akkor indul csak el a folyamat.
+            A programban lévő a1 és a2 sorok, azok fix sorok, nem változnak. Az 'OR' 'AND' és 'EXOR' sorok valamilyen logikai művelettel jöttek létre.
+            A különboző sorok utáni 'data.frame' paranccsal data frame-ket hozunk létre, ami lehetővé teszi, hogy a kapott adatokat táblázat formájában tároljuk.
+            
+        </para>            
+    </section>        
+    <section>
+        <title>Hiba-visszaterjesztéses perceptron</title>
+        <para>
+            C++
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/Prog1/blob/SylwerStone-perceptron/main.cpp">https://github.com/SylwerStone/Prog1/blob/SylwerStone-perceptron/main.cpp</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat:
+			
+            A perceptron a megserséges intelligenciában használt neuron egyik legelterjedtebb válzotata, ami úgymond egy alakfelismerő gép, amelynek az a feladata, hogy véges számú kísérlet alapján osztályozni tudja a bináris alakzatokat.
+            Itt a mandelbrot halmaz alapján generált kép RGB kódját rakjuk be a percepton inputjába. 
+			A programhoz tehát szükségünk lesz a mandelbrot halmaz által generélt png-re, az ml.hpp-re és a main.cpp-re.
+			A main.cpp forráskódjának elején include-oljuk például az ml.hpp, amely a Perceptron osztályt tartalmazza.
+        <programlisting language="c"><![CDATA[
+			#include <iostream>
+			#include "ml.hpp"
+			#include <png++/png.hpp>
+]]>    
+</programlisting>
+Ezután létrehozunk egy üres png-t
+<programlisting language="c"><![CDATA[
+ png::image <png::rgb_pixel> png_image (argv[1]);
+
+]]>    
+</programlisting>
+Egy változóban tároljuk el a kép méretét, majd létrehozzuk a Perceptron-t, amelyben azt adjuk meg, hogy hány rétegünk legyen (itt 3 lesz), és hogy azokon a rétegeken hány neuron legyen.
+Az utolsóba 1-et rakunk, mivel ez adja majd az eredményünket
+
+<programlisting language="c"><![CDATA[
+int size = png_image.get_width() * png_image.get_height();
+    
+    Perceptron* p = new Perceptron (3, size, 256, 1);
+]]>    
+</programlisting>
+A memóriába másoljuk a for ciklusok segítségével a kép piros pixeleit. Majd a Perceptron osztály operátora adja meg nekünk az eredményt, amit a cout-at kiíratunk
+<programlisting language="c"><![CDATA[
+   
+    for (int i = 0; i<png_image.get_width(); ++i)
+        for (int j = 0; j<png_image.get_height(); ++j)
+            image[i*png_image.get_width() + j] = png_image[i][j].red;
+    
+    double value = (*p) (image); //ez adja vissza az eredményt
+    
+    std::cout << value << std::endl; //ezzel íratjuk ki az eredményt
+]]>    
+</programlisting>
+        </para>            
+    </section>        
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+</chapter>                

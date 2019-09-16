@@ -1,0 +1,52 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Gödel!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+
+    <section>
+        <title>Gengszterek</title>
+        <para>
+        </para>
+        
+    </section>
+
+  <section>
+    <title>C++11 Custom Allocator</title>
+    <para>
+    </para>
+
+  </section>
+
+  <section>
+    <title>STL map érték szerinti rendezése</title>
+    <para>
+    </para>
+
+  </section>
+
+  <section>
+    <title>Alternatív Tabella rendezése</title>
+    <para>
+    </para>
+
+  </section>
+
+  <section>
+    <title>Prolog családfa</title>
+    <para>
+    </para>
+
+  </section>
+
+  <section>
+    <title>GIMP Scheme hack</title>
+    <para>
+    </para>
+
+  </section>
+
+
+</chapter>                
