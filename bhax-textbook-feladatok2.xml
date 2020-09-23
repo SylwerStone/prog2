@@ -14,14 +14,6 @@
             </tip>    
         
     </partintro>
-
-  <xi:include href="bhax-textbook-feladatok2-bernerslee.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
     
     <xi:include href="bhax-textbook-feladatok2-arroway.xml">
         <xi:fallback>
@@ -29,80 +21,8 @@
                 <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
             </para>
         </xi:fallback>
-    </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-liskov.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-mandelbrot.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-chomsky.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-stroustrup.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-arroway.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-godel.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-blank.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-schwarzenegger.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-
-  <xi:include href="bhax-textbook-feladatok2-calvin.xml">
-    <xi:fallback>
-      <para>
-        <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
-      </para>
-    </xi:fallback>
-  </xi:include>
-  
-  
-            
+    </xi:include>     
+ 
+    
+	
 </part>  

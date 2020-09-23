@@ -9,37 +9,246 @@
     <section>
         <title>Liskov helyettesítés sértése</title>
         <para>
-          
+		Írjunk olyan OO, leforduló Java és C++ kódcsipetet, amely megsérti a Liskov elvet! Mutassunk rá a
+megoldásra: jobb OO tervezés.
+https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_1.pdf (93-99 fólia)
+(számos példa szerepel az elv megsértésére az UDPROG repóban, lásd pl. source/binom/BatfaiBarki/madarak/)
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/kzoltan99/prog2-feladatok/blob/master/liskovsert.cpp">https://github.com/kzoltan99/prog2-feladatok/blob/master/liskovsert.cpp</link>
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	    </para>
+<para>
+	A Liskov féle helyettesítési elv lényege:
+	Például ha S altípusa T-nek, akkor minden olyan helyen ahol T-t felhasználjuk S-t is be tudjuk helyettesíteni
+	de a programrész tulajdonságai így sem változnak. Ha kicsit egyszerűbben szeretnénk kifejezni magunkat akkor mondhatjuk azt is, hogy
+	ha S a T osztály leszármazottja akkor be tudjuk helyettesíteni minden olyan helyre ahol T típust várunk.
+	 Nézzünk most egy egyszerű példát:<programlisting><![CDATA[
+	class Shape { }
+
+class Ellipse : Shape
+{
+    public double MajorAxis { get; set; }
+    public double MinorAxis { get; set; }
+}
+
+class Circle : Ellipse
+{
+
+	}]]></programlisting>
+Az osztályhierarchiában a Kör az Ellipszisből származik, mivel az annak egy különleges esete. 
+Ha ezt vesszük figyelembe akkor egy szerintem érdekes problémába fogunk ütközni.
+készítsünk egy olyan függvényt ami az ellipszis tengelyét is módosítja.
+Maga a Liskov elv alkalmázásából adódóan a ezt a függvényt akármelyik Kör objektumra is meg tudjuk hívni.
+Mi történik akkor, ha egy Kör objektum tengelyei megváltoznak? A válasz egyértelmű: a kör megszűnik kör lenni, de maga
+az objektum, hibásan ugye, de megmarad.
+Végülis az a probléma, hogy azt gondoljuk, hogy a Kör egy Ellipszis. Ennek a matematikai része igaz is, viszont
+nekünk most a programozási részről kellene megközelíteni a dolgot.
+Az a baj, hogy hiába vannak a Körnek Ellipszishez hasonló tulajdonságai, nem feltétlenül tudjuk vele betartani
+az arra vonatkozó szabályokat.
+Ezt a problémát kiküszöbölni úgy tudjuk ha ún. immutábilis objektumokat használunk. Ez azt jelenti, hogy minden olyan esetben
+amikor megváltoztatnánk az objektumot akkor egy új jön létre. Vagy éppenséggel azt is megtehetjük, hogy a Kört nem is
+vesszük bele a hierarchiába hanem helyette mindig Ellipszist használunk.
+
+	    </para>
+    </section>
+       <section>
+        <title>Szülő-gyerek</title>
+        <para>
+rjunk Szülő-gyerek Java és C++ osztálydefiníciót, amelyben demonstrálni tudjuk, hogy az ősön
+keresztül csak az ős üzenetei küldhetőek!
+https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_1.pdf (98. fólia)4
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	       </para>
+	       <para>
+	       Ennek a feladatnak a lényege az, hogy szemléltetni tudjuk azt a jelenséget, hogy a Szülő-Gyerek kapcsolatban
+	       a Szülő mindig érti a gyerek üzenetét viszont fordítva ez nincs így. Hiszen ha valamit a gyerek classban definiálunk
+	       akkor azt a szülő nem fogja érteni és elszáll a programunk. Mivel vannak olyan osztályok, metódusok amikkel a szülő
+	       rendelkezik és ezeket a gyerek örökölni tudja, viszont ez visszafelé már nem működik.
+	       <programlisting><![CDATA[
+class Osztaly{
+	public static void main(String[] args){
+	Szulo sz = new Gyerek();
+	sz.kiir1();
+	sz.kiir2();
+	}
+}
+	class Szulo{
+	public void kiir1(){
+		System.out.println("Szulo");
+		}
+	}
+	class Gyerek extends Szulo{
+	public void kiir2(){
+		System.out.println("Gyerek");
+		}
+ }]]></programlisting>
+	       Ennek szemléltetésésre szerettem volna ezt a kis csipetet bemutatni.
+       a szülő rendelkezik a kiir1 metódussal amit tud tőle örökölni a gyerek is, de ahogy láthatjuk a kódban a gyereknek van egy
+       kiir 2 metódusa is amit viszont a szülő nem ismer és ez okozza nekünk a galibát. A kiir 2-t nem tudjuk meghívni
+       viszont a kiir 1-et simán tudnánk, fordulna, futna a progi probléma nélkül. Javában minden objektum referencia,
+       és a kötés dinamikus de ezzel nem küldhetjük a gyerek által hozott új üzeneteket, tehát az ősön keresztül csak
+       az ős üzeneteit tudjuk küldeni.
+       <programlisting><![CDATA[
+#include <iostream>
+using namespace std;
+
+	class Szulo{
+	public:
+	 void kiir1(){
+		cout << "Szulo" << endl;
+		}
+	};
+	class Gyerek : public Szulo{
+	public:
+	 void kiir2(){
+		cout << "Gyerek" << endl;
+		}
+	};
+int main(){
+	
+	Szulo* sz = new Gyerek();
+	sz->kiir1();
+	sz->kiir2();
+}]]></programlisting>
+       Itt pedig a c++-os verzió látható. Az eredmény ugyanaz lesz mint Javaban. A példányosításnál hiába hívjuk a kiir2-t 
+       hibát fogunk kapni mint ahogy az Javaban is történt.
         </para>
     </section>
+	<section>
+        <title>Anti OO</title>
+        <para>
+A BBP algoritmussal
+a Pi hexadecimális kifejtésének a 0. pozíciótól számított 10^6, 10^7, 10^8 darab
+jegyét határozzuk meg C, C++, Java és C# nyelveken és vessük össze a futási időket!
+https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apas03.html#id561066
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/kzoltan99/pi-bbp-bench">https://github.com/kzoltan99/pi-bbp-bench</link>           
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+		</para>
+		<para>
+	Ebben a feladatban négy különböző programnyelven(c, c++, c# és java) ugyanazt a programot fogjuk futtatni és összevetjük
+	a futási időket. Ez a program az előző fejezteben már taglalt BBP algoritmus ami a a Pi hexadecimális alakjának a
+	0. pozíciótól számított 10 a hatodikon, hetediken és nyolcadikon db jegyét határozza meg.
+        </para>
+    </section>
+	<section>
+        <title>deprecated - Hello, Android!</title>
+        <para>
+Élesszük fel a https://github.com/nbatfai/SamuEntropy/tree/master/cs projektjeit és vessünk össze
+néhány egymásra következőt, hogy hogyan változtak a források!
 
-  <section>
-    <title>Szülő-gyerek</title>
-    <para>
-
-    </para>
-  </section>
-
-  <section>
-    <title>Anti OO</title>
-    <para>
-
-    </para>
-  </section>
-
-  <section>
-    <title>Hello, Android!</title>
-    <para>
-
-    </para>
-  </section>
-
-  <section>
-    <title>Ciklomatikus komplexitás</title>
-    <para>
-
-    </para>
-  </section>
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>
+	<section>
+        <title>Hello, Android!</title>
+        <para>
+Élesszük fel az SMNIST for Humans projektet!
+https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/src/main
+Apró módosításokat eszközölj benne, pl. színvilág.
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>
+	<section>
+        <title>Hello, SMNIST for Humans!</title>
+        <para>
+Fejleszd tovább az SMNIST for Humans projektet SMNIST for Anyone emberre szánt appá! Lásd
+az smnist2_kutatasi_jegyzokonyv.pdf-ben a részletesebb hátteret!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>
+	<section>
+        <title>Ciklomatikus komplexitás</title>
+        <para>
+Számoljuk ki valamelyik programunk függvényeinek ciklomatikus komplexitását! Lásd a fogalom
+tekintetében a https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_2.pdf (77-79
+fóliát)!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+		</para>
+		<para>
+A ciklomatikus komplexitás nem más mint egy ún. szoftvermetrika amit 1976-ban talált fel Thomas J. McCabe.
+Hallhattunk már róla akár McCabe-komplexitás néven is. Képes egy adott forráskód alapján a szoftver komplexitását kiszámolni 
+és ezt konkrétan számunkra értelmezhető számokban ki is tudja fejezni. Az eredményül kapott szám a kiszámítási művelete a gráfelméletre
+épül. A gráf pontjai és a köztük lévő élek a forrásban lévő elágazások alapján épülnek ki és ezek alapján történik a számítás.
+		</para>
+		<para>
+A komplexitás értéke:
+M = E − N + 2P
+E: a gráf éleinek száma.
+N: a gráfban lévő csúcsok száma.
+P: Az összefüggő komponensek száma
+A ciklomatikus szám: M = E − N + P
+		</para>
+		<para>
+A ciklomatikus komplexitás a gráf ciklomatikus száma ami a lehetséges kimeneteket köti össze a bemenetekkel.
+Tehát a gráf alkotói a függvényben lévő utasítások. Ha egyik utasítás után rögtön végre lehet hajtani a másikat akkor van él
+közöttük ami abból következik, hogy a lineárisan független útvonalakat a metrika közvetlenül számolja a forrásból.
+		</para>
+		<para>
+A komplexitás számítására találtam egy nagyon jó kis oldalt amit segítségül hívtam:<link xlink:href="http://www.lizard.ws/">http://www.lizard.ws/</link>
+<figure>
+	<title>Példa a komplexitásra</title>
+	<mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/ciklomatikus%20komplexitás.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+	</figure>
+        </para>
+    </section>
+        
         
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                

@@ -6,50 +6,311 @@
         </keywordset>
     </info>
 
-    
+    <section>
+        <title>JDK osztályok</title>
+        <para>
+		Írjunk olyan Boost C++ programot (indulj ki például a fénykardból) amely kilistázza a JDK összes
+osztályát (miután kicsomagoltuk az src.zip állományt, arra ráengedve)!
 
-  <section>
-    <title>JDK osztályok</title>
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	    </para>
     <para>
-    </para>
-
-  </section>
-  
-
-
-  <section>
-    <title>Másoló-mozgató szemantika</title>
+	    Ezt a feladatot a leírásban ajánlott Bátfai Tanár Úr által készített fenykard.cpp alapján készítettem el.
+	    </para>
     <para>
-    </para>
-
-  </section>
-
-
-
-
-  <section>
-    <title>Hibásan implementált RSA törése</title>
+	    Azért jó kiindulási kód a fénykard mert ebben is állományok kilistázása valamint rekurzív bejárás megvalósítása történik.
+	    Ezt a feladatot itt a forrás 72. sorában található read_acts függvény végzi el, viszont nekünk ezen kell változtatnunk, 
+	    mivel mi a JDK osztályait akarjuk majd kilistázni.
+	    </para>
     <para>
-    </para>
+	    <programlisting><![CDATA[
+void read_acts(boost::filesystem::path path, std::map <std::string, int> &acts)
+{
 
-  </section>
+    if (is_regular_file(path)) {
+
+        std::string ext(".props");
+        if (!ext.compare(boost::filesystem::extension(path))) {
+
+            std::string actpropspath = path.string();
+            std::size_t end = actpropspath.find_last_of("/");
+            std::string act = actpropspath.substr(0, end);
+
+            acts[act] = get_points(path);
+
+            std::cout << std::setw(4) << acts[act] << "    " << act << std::endl;
+        }
 
 
+    } else if (is_directory(path))
+        for (boost::filesystem::directory_entry & entry : boost::filesystem::directory_iterator(path))
+            read_acts(entry.path(), acts);
 
-  <section>
-    <title>Változó argumentumszámú ctor</title>
+}]]></programlisting>
+	    </para>
     <para>
-    </para>
-
-  </section>
-  
-
-
-  <section>
-    <title>Összefoglaló</title>
+	    Ahogy itt láthatjuk a kódcsipetben ez a függvény a .props állományokat listázza ki nekünk. Ezt módosítjuk úgy, hogy a
+	    .java állományokkal tegye ezt. Ezt úgy tudjuk megvalósítani, hogy egy kicsit fargunk ebból a függvényből, vagyis az act-okat
+	    kitöröljük mivel számunkra azok lényegtelenek. Egy egyszerű push_back-el hellyetesítjük, és a .props valamint acts előfordulásokat
+	    rendre .java és Classes előfordulásra cseréljük.
+	    </para>
     <para>
-    </para>
+	    Így néz ki a számunkra megfelelő verzió:
+	    <programlisting><![CDATA[
+void readClasses(boost::filesystem::path path, vector<string>& classes){
+	if (is_regular_file(path)){
+		std::string ext(".java");
+		if (!ext.compare(boost::filesystem::extension(path))){
+			classes.push_back(path.string());
+		}
+	}
+	else if (is_directory(path))
+		for (boost::filesystem::directory_entry & entry : boost::filesystem::← directory_iterator(path))
+		readClasses(entry.path(), classes);
+}]]></programlisting>
+	    </para>
+    <para>
+	    És ezekkel a változatásokkal sikerült elérni a célunkat vagyis, hogy a programunk rekurzívan bejárja a kapott állományt és abból az
+	    összes .java-t kilistázza nekünk.
+        </para>
+    </section>        
 
-  </section>
+
+    <section>
+        <title>Másoló-mozgató szemantika</title>
+        <para>
+		Kódcsipeteken (copy és move ctor és assign) keresztül vesd össze a C++11 másoló és a mozgató
+szemantikáját, a mozgató konstruktort alapozd a mozgató értékadásra!
+
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>        
+
+
+    <section>
+		<title>Hibásan implementált RSA törése</title>
+		<para>
+Készítsünk betű gyakoriság alapú törést egy hibásan implementált RSA kódoló:
+			<link xlink:href="https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_3.pdf">https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_3.pdf</link> (71-73 fólia) által
+készített titkos szövegen.
+		</para>
+	<para>
+	Az RSA egy viszonylag régen, 1976-ban kifejleszett titkosító algoritmus, de ettől függetlenül a mai napon is az egyik leggyakrabban használt.
+	Az egész algoritmus nagyon összetett és bonyolult matematikai háttérrel rendelkezik, és véleményem szerint a feladatunk megoldásához most ez nem is olyan lényeges.
+	Működési elve viszont annyira nem nehezen érthető szerintem. Van egy titkos és egy nyilvános kulcsunk, a nyilvánossal tudunk titkosítani, és ez publikus
+	valamint a titkos kulccsal tudjuk feloldani a titkosítást.
+	Nekünk most azt kell valahogy megvalósítani, hogy ne működjön ez az algoritmus, tehát ne lehessen a kódolást visszafejteni.
+	Az RSA algoritmust sajnos még nem volt lehetőségem behatóbban megismerni ezért Szilágyi Csaba barátom segítségét vettem igénybe a megoldáshoz.
+	Szokásos módon a fontos könyvtárak importálásával kezdünk. (pl:filereader és a BigInteger)
+	<programlisting><![CDATA[
+	import java.io.BufferedReader;
+import java.io.FileReader;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map.Entry;]]></programlisting>
+</para>
+	<para>
+	Aztán itt láthatjuk magát a main függvényt.
+	<programlisting><![CDATA[
+	public class rsa_chiper {
+	public static void main(String[] args) {
+		int bitlength = 2100;
+		
+		SecureRandom random = new SecureRandom();
+		
+		BigInteger p = BigInteger.probablePrime(bitlength/2, random);
+		BigInteger q = BigInteger.probablePrime(bitlength/2, random);
+		
+		BigInteger publicKey = new BigInteger("65537");
+		BigInteger modulus = p.multiply(q);
+		
+		String str = "this is a perfect string".toUpperCase();
+		System.out.println("Eredeti: " + str);
+		
+		byte[] out = new byte[str.length()];
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (c == ' ')
+				out[i] = (byte)c;
+			else
+				out[i] = new BigInteger(new byte[] {(byte)c}).modPow(publicKey, modulus).byteValue();
+		}
+		String encoded = new String(out);
+		System.out.println("Kodolt:" + encoded);
+		
+		Decode de = new Decode(encoded);
+		System.out.println("Visszafejtett: " + de.getDecoded());
+	}
+}]]></programlisting>
+</para>
+	<para>
+	Mainben fog történni a szöveg letitkosítása valamint itt jön létre a kulcs is. A fő osztályunk itt az rsa_chiper lesz.
+	Itt kell majd megadni azt a szöveget is amit szeretnénk titkossá tenni, ezt fogja majd megpróbálni visszafejteni a programunk.
+	És ezután látható majd a feladat megvalósításának egyik fontos lépése: a betűről betűre való titkosítás megvalósítása.
+	<programlisting><![CDATA[
+		byte[] out = new byte[str.length()];
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (c == ' ')
+				out[i] = (byte)c;
+			else
+				out[i] = new BigInteger(new byte[] {(byte)c}).modPow(publicKey, modulus).byteValue();
+		}]]></programlisting>
+		</para>
+	<para>
+	A titkosított szöveget úgy állítja elő a program, hogy a byte-okból emberek számára "fogyaszthatatlan" humbug szöveget csinál.
+	</para>
+	<para>
+	Az algoritmus a betűk gyakoriságát figyeli és aszerint helyettesíti be a karaktereket ezért kell egy lista amelyben ez az információ szerepel.
+	Érdemes a listát a használt emberi nyelven belüli betűgyakoriság alapján beállítani.
+	<programlisting><![CDATA[
+	private void loadFreqList() {
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader("freq.txt"));
+			String line;
+			while((line = reader.readLine()) != null) {
+				String[] args = line.split("\t");
+				char c = args[0].charAt(0);
+				int num = Integer.parseInt(args[1]);
+				this.charRank.put(c, num);
+			}
+		} catch (Exception e) {
+			System.out.println("Error when loading list -> " + e.getMessage());
+		}		
+	}]]></programlisting>
+	</para>
+	<para>
+	Aztán szükségünk van egy olyan függvényre ami ezt a listát beolvassa és ha előfordulást észlel akkor belerakja a listába 1-es kezdőértékkel, ha már benne van
+	akkor pedig növeloi ezt a számot egyel. Csak és kizárólag a betűket számolja, tehát mondjuk a space-t nem veszi figyelembe. Maga a vizsgálat azért fontos, hogy
+	megtudjuk melyik betűnek van a legnagyobb értéke bagyis melyik szerepel a legtöbbet, és ez lesz a prioritásunk.	
+	</para>
+	<para>
+	Végül a programunk meghívja a nextFreg függvényt, ez a listából behelyettesíti a karaktereket,(ún. max. kiválasztásos módszer alkalmazásásval.) és ezeket ki 
+	is veszi a lsitából így az végül üres lesz. A visszafejtés pontossága nem mindig kielégítő de legtöbb esetben az eredeti szöveghez hasonlót kapunk vissza.
+	A sikeresség nagyban, vagyis szinte teljesen az elkészített listától függ.
+	<programlisting><![CDATA[
+	private char nextFreq() {
+		char c = 0;
+		int nowFreq = 0;
+		for(Entry<Character, Integer> e : this.charRank.entrySet()) {
+			if (e.getValue() > nowFreq) {
+				nowFreq = e.getValue();
+				c = e.getKey();
+			}
+		}
+		if (this.charRank.containsKey(c))
+			this.charRank.remove(c);
+		return c;
+	}]]></programlisting>
+	</para>
+	<para>
+	Legvégül pedig a getDecode visszaadja nekünk a szöveget amit a program visszafejtett. 
+	</para>
+		<figure>
+	<title>RSA</title>
+	<mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/11.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+	</figure>
+
+	</section>
+
+
+    <section>
+		<title>Változó argumentumszámú ctor</title>
+		<para>
+Készítsünk olyan példát, amely egy képet tesz az alábbi projekt Perceptron osztályának bemenetére
+és a Perceptron ne egy értéket, hanem egy ugyanakkora méretű „képet” adjon vissza. (Lásd még a 4
+hét/Perceptron osztály feladatot is.)
+		</para>
+	<para>
+	A feladatot az előző csokorban szereplő perceptronos feladat alapján csináltam meg. A forrás nagy része így megegyezik.
+		</para>
+<para>Mivel többrétegű perceptront fogunk alkalmazni ezért meg kell tennünk a megfelelő include-okat. Ezek névszerint az mlp és a png kép használata végett a png könyvtárak.
+	<programlisting><![CDATA[
+#include <iostream>
+#include "mlp.hpp"
+#include <png++/png.hpp>]]></programlisting>
+	</para>
+	<para>
+	Maga a forrás nem túl hosszú. Először is beolvassuk a képet (get_width, get_height) és a new operátorral létrehozzuk a perceptront.
+	<programlisting><![CDATA[
+int main(int argc, char ++argv){
+png::image <png::rgb_pixel> png_image(argv[1]);
+int size = png_image.get_width()*png_image.get_height();
+Perceptron *p = new Perceptron(3, size, 256, 1);]]></programlisting>
+	</para>
+	<para>
+	Aztán létre kell hoznunk egy double változót. Utána szépen végigmegyünk a kép magasság/szélesség pontjain for ciklusokkal. Az image fogja tárolni azt a színkomponenst amit a kódban megadtunk. A value pedig majd azt a double-t fogja tárolni amit a végén kiíratunk.
+	<programlisting><![CDATA[
+	double* image = new double[size];
+for(int i = 0; i<png_image.get_width(); ++i)
+	for(int j = 0; i<png_image.get_height(); ++j)
+	image[i*png_image.get_width()+j] = png_image[i][j].red;
+double value = (*p) (image);
+cout << value << endl;]]></programlisting>
+</para>
+	<para>
+	Ezek után jöhetnek a változtatások az eredeti perceptronos feladathoz képest. Most azt szeretnénk, hogy egy képet generáljon nekünk a program nem pedig értékeket írjon.
+	Ezt végrehajtandó implementálunk két új for ciklust az előzőekkel megfelelő céllal valamint double*-ot fogunk használni a sima double helyett. Ezek azért szükségesek, hogy
+	a megfelelő végeredményt kapjuk, vagyis a képünk megfelelő adatokat kapjon a sikeres generáláshoz és a write png kiterjesztésű képet alkosson nekünk.
+	<programlisting><![CDATA[
+double* newPicture = (*p) (image);
+for(int i=0; i<png_image.get_width(); ++i)
+for(int j=0; j<png_image.get_height(); ++j)
+	png_image[i][j].red = newPicture[i*png_image.get_width()+j];
+png_image.write("output.png");]]></programlisting>
+</para>
+	<para>
+	A kódunk végén pedig elvégezzük a szükséges hely felszabadítást a memóriában, amit a következő képpen teszünk:
+	<programlisting><![CDATA[
+delete p;
+delete [] image;]]></programlisting>
+</para>
+	<para>
+	Ahhoz, hogy minden probléma nélkül fusson már csak annyit kell tennünk, hogy az mlp.hpp header fájlban is átírjuk a double-t double*-ra, mivel azt szeretnénk, hogy visszaadja.
+	<programlisting><![CDATA[
+double* operator() ( double image [] )]]></programlisting>
+</para>
+		</section>
+
+
+    <section>
+        <title>Összefoglaló</title>
+        <para>
+		Az előző 4 feladat egyikéről írj egy 1 oldalas bemutató „”esszé szöveget!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>        
+   
+        
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                

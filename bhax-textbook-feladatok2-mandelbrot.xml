@@ -9,37 +9,224 @@
     <section>
         <title>Reverse engineering UML osztálydiagram</title>
         <para>
+		UML osztálydiagram rajzolása az első védési C++ programhoz. Az osztálydiagramot a forrásokból
+generáljuk (pl. Argo UML, Umbrello, Eclipse UML) Mutassunk rá a kompozíció és aggregáció
+kapcsolatára a forráskódban és a diagramon, lásd még: https://youtu.be/Td_nlERlEOs.
+https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_6.pdf (28-32 fólia)
+
         </para>
-        
-    </section>
-  <section>
-    <title>Forward engineering UML osztálydiagram</title>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/kzoltan99/prog2-feladatok/blob/master/Binfa.cpp">https://github.com/kzoltan99/prog2-feladatok/blob/master/Binfa.cpp</link>              
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	    </para>
     <para>
-    </para>
+	    Itt a C++-os binfát kellet legenerálni egy uml osztálydiagrammba. Ezt a feladatot a Visual Paradigm segítégével oldottam meg.
+	    A feladat viszonylag egyszerű volt egy pár kattintással meg lehetett oldani. Először is a visual paradigm-ban kiválasztjuk a
+	    tools fület azon belül pedig lenyitjuk a code-ot. A code opción belül pedig kiválasztjuk az instant reverse-t.
+	    </para>
+	    <figure>
+		    <title>1.</title>
+	    <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/1.png" scale = "55"/>
+		</imageobject>
+	</mediaobject>
+	    </figure>
+	    
+	    
+	   <para> A language-nél megadjuk a c++ forrást, majd megadjuk a kódunk elérési útját és az ok-ra kattintunk, ezzel el is készült
+		   az osztálydiagram.</para>
+	      <figure>
+			<title>2.</title>		
+		      <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/2.png" scale = "55"/>
+		</imageobject>
+	</mediaobject>
+		     </figure>
+	    <para>Már csak annyi a teendőnk, hogy a reversed classes and packages ablakban mindent bepipálunk így láthatóvá
+		    válik a diagrammunk.</para>
+	     <figure> 
+	   <title>3.</title>
+		     <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/3.png" scale = "55"/>
+		</imageobject>
+	</mediaobject>
+							     </figure>
+	   <para> Az importált elemek automatikusan behúzásra kerülnek megfelelő módon.(tehát minden kis vonal oda mutat ahová kell)</para>
+	 
+	<figure>
+		 <title>4.</title>
+    	 <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/reverse.png" scale = "55"/>
+		</imageobject>
+	</mediaobject>
+        </figure>	     
+    </section>        
 
-  </section>
+      <section>
+        <title>Forward engineering UML osztálydiagram</title>
+        <para>
+		UML-ben tervezzünk osztályokat és generáljunk belőle forrást!
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/kzoltan99/forward-UML">https://github.com/kzoltan99/forward-UML</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	      </para>
+      <para>
+	      Ez a feladat ha úgy vesszük akkor az előző fordítottja lenne. Tehát most nekünk kell egy osztálydiagramot készíteni és
+	      ebből fogunk majd kódot generálni. Megint a Visual Paradigm-ot használtam a megoldáshoz. Ez a feladat már számomra nehezebb
+	      volt mivel még nem csináltam soha osztálydiagramot, de ettől függetlenül összeállítottam egy egyszerűt.
+	      Először is a a diagram fülön a new opciót valasztottam majd kikerestem a class diagramot.
+	      </para> 
+	      <figure>
+		      <title>5.</title>
+	      <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/4.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+	    </figure>
+	      <para>Azon belül pedig a blank opciót</para>
+	      <figure>
+ <title>6.</title>
+	    <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/5.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+	    </figure>
+							  
+	      <para>Aztán megadjuk a diagramunk nevét és okéra kattintunk.</para>
+	     <figure>
+		       <title>7.</title>
+	      <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/6.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+							     </figure>  
+	    <para>Ezek után kapunk egy üres oldalt ahol kedvünkre hozhatunk létre akármilyen osztálydiagramot. Magunktól kell, hogy 
+	    létrehozzuk az osztályokat, azok metódusait, változóit, függvényeit, szóval tényleg mindent ami hozzá tartozik.
+		    Az enyém így néz ki:</para>
+	    <figure>
+		     <title>8.</title>
+							    <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/forward.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+       </figure>
+	      
+		       <para>Mostmár pedig már csak annyi dolgunk van, hogy ebből legeneráljuk magát a kódot amit a következőképpen csinálunk:
+      Ugyanúgy mint az előző feladatban kiválasztjuk a tool fülön belüli code opciót de most azon belül az instant generator-re kattintunk.
+      Itt megint bepipáljuk amiot le szeretnénk generálni, az output path opciónál megadjuk neki hova rakja a forrást, generálunk és
+			       mér készen is vagyunk.</para>
+	     <figure>
+		       <title>9.</title>
+	      <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/7.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+	      </figure> 
+							    
+    </section> 
+	    <section>
+        <title>Egy esettan</title>
+        <para>
+		A BME-s C++ tankönyv 14. fejezetét (427-444 elmélet, 445-469 az esettan) dolgozzuk fel!
 
-  <section>
-    <title>Egy esettan</title>
-    <para>
-    </para>
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section> 
+	    <section>
+        <title>BPMN</title>
+        <para>
+		Rajzoljunk le egy tevékenységet BPMN-ben!
+https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_7.pdf (34-47 fólia)
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+							    </para>
+	    <para>
+A BPMN (Business Process Model and Notation) legfőképpen az üzleti szférában alkalmazott folyamatleíró. Segítségével könnyen és egyszerűen
+tudunk grafikusan ábrázolni folyamatokat. Ebben a feladatban ennek a segítségével kellett valami egyszerű tevékenységet ábrázolni.
+Én úgy döntöttem, hogy ez a számítógép bekapcsolásásának és a bejelentkezésnek a folyamata lesz. A draw.io (Google) segítségével oldottam
+meg a feladatot. Használata elég egyszerű és szinte adja magát, hogy mit hogyan kell csinálni benne. Itt is mindent tudunk ábrázolni szinte
+amit szeretnénk (pl: event, activity, gateway)
+Az én verzióm így néz ki:</para>
+  <figure>
+	  <title>10.</title>
+							    <mediaobject>
+		<imageobject>
+		<imagedata fileref="./img/8.png" scale = "60"/>
+		</imageobject>
+	</mediaobject>
+		 </figure>	
+		    <para>
+Véleményem szerint a az ábra értelmezése is meglehetősen egyszerű, csupán ránézésre meg lehet érteni milyen folyamatot ír le és mi történik abban.
+        </para>
+    </section> 
+	
+	    <section>
+        <title>BPEL Helló, Világ! - egy visszhang folyamat</title>
+        <para>
+		Egy visszhang folyamat megvalósítása az alábbi teljes „videó tutoriál” alapján:
+https://youtu.be/0OnlYWX2v_I
 
-  </section>
-
-  <section>
-    <title>BPMN</title>
-    <para>
-    </para>
-
-  </section>
-
-  <section>
-    <title>TeX UML</title>
-    <para>
-    </para>
-
-  </section>
-
-
-
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section> 
+            <section>
+        <title>TeX UML</title>
+        <para>
+		Valamilyen TeX-es csomag felhasználásával készíts szép diagramokat az OOCWC projektről (pl.
+use case és class diagramokat).
+        </para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 </chapter>                

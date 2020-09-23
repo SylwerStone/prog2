@@ -7,25 +7,100 @@
     </info>
 
     <section>
-        <title>A BPP algoritmus Java megvalósítása</title>
+        <title>OO szemlélet</title>
         <para>
+		A módosított polártranszformációs normális generátor beprogramozása Java nyelven. Mutassunk rá,
+hogy a mi természetes saját megoldásunk (az algoritmus egyszerre két normálist állít elő, kell egy
+példánytag, amely a nem visszaadottat tárolja és egy logikai tag, hogy van-e tárolt vagy futtatni kell
+az algot.) és az OpenJDK, Oracle JDK-ban a Sun által adott OO szervezés ua.!
+https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_5.pdf (16-22 fólia)
+Ugyanezt írjuk meg C++ nyelven is! (lásd még UDPROG repó: source/labor/polargen)
+
         </para>
         <para>
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása:<link xlink:href="https://github.com/kzoltan99/prog2-feladatok">https://github.com/kzoltan99/prog2-feladatok</link>             
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat...
-        </para>
+	    </para>
+	    <para>
+Ebben a feladatban a polártranszformációs generátor megírása volt a feladat. A szemléltetés a Bátfai Tanrár úr által megírt kódon kersztül történik,
+hiszen ez a Sun által írt program egy egyszerűbb, könnyebben megérthető változata.
+A működési elv egyszerű: <programlisting><![CDATA[
+public class PolárGenerátor {
+
+boolean nincsTárolt = true;
+double tárolt;
+
+public PolárGenerátor() {
+nincsTárolt = true;
+}]]></programlisting>
+		    Tehát ebben a részben annyit csinál a program, hogy boolean típusú változó segítségével megnézi, hogy van-e
+		    eltárolt normális. Ha nincs akkor a következő módon állítunk elő kettőt:
+<programlisting><![CDATA[
+public double következő() {
+if (nincsTárolt) {
+double u1, u2, v1, v2, w;
+do {
+	u1 = Math.random();
+	u2 = Math.random();
+	v1 = 2 * u1 - 1;
+	v2 = 2 * u2 - 1;
+	w = v1 * v1 + v2 * v2;
+	} while (w>1);
+	double r = Math.sqrt((-2 * Math.log(w)) / w);
+	tárolt = r * v2;
+	nincsTárolt = !nincsTárolt;
+	return r * v1;
+	} else {
+		nincsTárolt = !nincsTárolt;
+		return tárolt;
+]]></programlisting>
+		    Ebből a kettőből egyet eltárolunk és a másikat fogjuk a végrehajtásra felhasználni, vagyis ezzel fog a következő() függvény visszatérni.
+		    Végül pedig a mainben használjuk fel a következő függvény-t és íratjuk ki a standard outputra az eredményt.
+		    <programlisting><![CDATA[
+   public static void main(String[] args) {
+PolárGenerátor g = new PolárGenerátor ();
+for (int i = 0; i < 10; ++i) {
+System.out.println(g.következő());
+]]></programlisting>
+		    
+        De a JDK-ban a Sunos megoldás mégiscsak különbözik a miénktől, mégpedig a synchronized public double használatában.
+		    Ez annyit tesz csak, hogy a program futássát korlátozza egyetlen egy szálra.
+		    <programlisting><![CDATA[
+synchronized public double nextGaussian() {
+        // See Knuth, ACP, Section 3.4.1 Algorithm C.
+        if (haveNextNextGaussian) {
+            haveNextNextGaussian = false;
+            return nextNextGaussian;
+        } else {
+            double v1, v2, s;
+            do {
+                v1 = 2 * nextDouble() - 1; // between -1 and 1
+                v2 = 2 * nextDouble() - 1; // between -1 and 1
+                s = v1 * v1 + v2 * v2;
+            } while (s >= 1 || s == 0);
+            double multiplier = StrictMath.sqrt(-2 * StrictMath.log(s)/s);
+            nextNextGaussian = v2 * multiplier;
+            haveNextNextGaussian = true;
+            return v1 * multiplier;
+        }
+    }]]></programlisting>
+	    </para>
     </section>        
 
     <section>
-        <title>Java osztályok a Pi-ben</title>
+        <title>Homokozó</title>
         <para>
-            Az előző feladat kódját fejleszd tovább: vizsgáld, hogy Vannak-e Java osztályok a Pi hexadecimális kifejtésében!
-        </para>
+rjuk át az első védési programot (LZW binfa) C++ nyelvről Java nyelvre, ugyanúgy működjön!
+Mutassunk rá, hogy gyakorlatilag a pointereket és referenciákat kell kiirtani és minden máris működik
+(erre utal a feladat neve, hogy Java-ban minden referencia, nincs választás, hogy mondjuk egy
+attribútum pointer, referencia vagy tagként tartalmazott legyen).
+Miután már áttettük Java nyelvre, tegyük be egy Java Servletbe és a böngészőből GET-es kéréssel
+(például a böngésző címsorából) kapja meg azt a mintát, amelynek kiszámolja az LZW binfáját!        </para>
         <para>
             Megoldás videó:
         </para>
@@ -35,7 +110,140 @@
         <para>
             Tanulságok, tapasztalatok, magyarázat...
         </para>
-    </section>        
+    </section>  
+
+    <section>
+        <title>„Gagyi”</title>
+        <para>
+Az ismert formális
+„<![CDATA[
+while (x <= t && x >= t && t != x);
+]]>” tesztkérdéstípusra adj a szokásosnál
+(miszerint x, t az egyik esetben az objektum által hordozott érték, a másikban meg az objektum
+referenciája) „mélyebb” választ, írj Java példaprogramot mely egyszer végtelen ciklus, más x, t
+értékekkel meg nem! A példát építsd a JDK Integer.java forrására3
+, hogy a 128-nál inkluzív objektum
+példányokat poolozza!
+</para>
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/kzoltan99/prog2-feladatok/tree/master">https://github.com/kzoltan99/prog2-feladatok/tree/master</link>               
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	    </para>
+	    <para>
+	
+	Ha az integer értékét úgy adjuk meg, hogy az -128 és 127 közé essen akkor nem lesz végtelen ciklusunk.
+	Ez azért van így mert ebben a tartományban az Integer ugyanazt az objektumot fogja felhasználni, csupán más értékek fognak hozzárendelődni.
+	Ezzel azt érjük el, hogy a t!=x -re minden egyes lefutás során hamis értéket fogunk kapni.
+		    Ezt például a következő képpen érhetjük el:<programlisting><![CDATA[
+class Gagyi
+{
+	public static void main(String[] args)
+	{
+		Integer t = 127;
+		Integer x = 127;
+		
+		while(x <= t && x>=t && t != x)
+			System.out.println("hop");		 
+	}
+}      ]]></programlisting>
+		    Ha viszont egy nagyon csekély változtatást alkalmazunk a kis kódunkban, máris végetelen ciklust kapunk:<programlisting><![CDATA[
+public class Gagyi_2 {
+
+	public static void main(String[] args) {
+	
+		Integer x = 128;
+		Integer t = 128;
+
+		while (x <= t && x >= t && t!=x) {
+			System.out.println("hop");
+		}
+	}
+}
+	 ]]></programlisting>	    
+       
+	    </para>
+    </section>  
+
+    <section>
+        <title>Yoda</title>
+        <para>
+Írjunk olyan Java programot, ami java.lang.NullPointerEx-el leáll, ha nem követjük a Yoda
+conditions-t! https://en.wikipedia.org/wiki/Yoda_conditions
+</para>
+
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	    </para>
+	    <para>
+A Yoda egy olyan programozási stílus, ahol a kifejezések sorrendét felcseráljül, mégpedig olyan módon, hogy a konstans kifejezés a bal
+oldalra kerül. Ez nem változtatja meg a program működését. Azért nevezhették el Yodaról ezt a módszert mert a Star Wars filmekben ő is igy beszélt, tehát nem
+helyes nyelvtani sorrendben mondta a mondatokat. Ez a módszer nagyon hatásos akkor ha el akarjuk kerülni a nullpointeres hibákat.
+Ezt a módszert a null pointeres hibák ellen használjuk.
+Először is nézzünk egy olyan példát ahol nem használjuk a Yoda conditions és ez problémát okoz:<programlisting><![CDATA[
+class yoda
+{
+	public static void main(String[] args)
+{
+String myString = null;
+if (myString.equals("valami"))
+{
+System.out.println("semmi"); 
+		}
+
+}
+}]]></programlisting>
+		    Ha ezt a kis egyszerű csipetet így használnánk akkor NullPointerEx-et kapunk és leáll.
+		    Ha viszont  használjuk Yoda mester módszerét akkor a program lefut:<programlisting><![CDATA[
+class yoda
+{
+	public static void main(String[] args)
+{
+String myString = null;
+if ("valami".equals(myString))
+{
+System.out.println("semmi"); 
+		}
+
+}
+}]]></programlisting>
+
+
+        </para>
+    </section>  
+    <section>
+        <title>Kódolás from scratch</title>
+        <para>
+Induljunk ki ebből a tudományos közleményből: http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/bbpalg.pdf és csak ezt tanulmányozva írjuk meg Java nyelven a BBP algoritmus megvalósítását!
+Ha megakadsz, de csak végső esetben: https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitokjavat/apbs02.html#pi_jegyei (mert ha csak lemásolod, akkor pont az a fejlesztői élmény marad ki,
+melyet szeretném, ha átélnél).
+</para>
+
+        <para>
+            Megoldás videó:
+        </para>
+        <para>
+            Megoldás forrása:  https://github.com/kzoltan99/prog2-feladatok/blob/master/PiBBP.java              
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+	    </para>
+	    <para>
+   A BBP (Bailey-Borwein-Plouffe) algoritmus a Pi hexa jegyeit kiszámoló osztály. Az alapja a BPP formula amit 1995-ben találtak fel.
+   Ez alapján a matematikai képlet apaján működik. Pi tizediktől a tizenötödik hatványáig számolja ki a számokat a program.
+   
+	    </para>
+    </section>  	
         
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                
