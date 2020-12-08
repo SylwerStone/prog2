@@ -69,7 +69,7 @@ CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
 Például: <link xlink:href="https://github.com/nbatfai/future/blob/master/cs/F9F2/fenykard.cpp#L180">https://github.com/nbatfai/future/blob/master/cs/F9F2/fenykard.cpp#L180</link>
 	</para>
 	<para>
-	Megoldás forrása: <link xlink:href="https://github.com/kzoltan99/prog2-feladatok/blob/master/STL.cpp">https://github.com/kzoltan99/prog2-feladatok/blob/master/STL.cpp</link>
+	Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/prog2/blob/master/prog2%20feladatok/STL.cpp">https://github.com/SylwerStone/prog2/blob/master/prog2%20feladatok/STL.cpp</link>
 		</para>
 		<para>
 	Az STL (Standard Template Library)tárolók és  adatszerkezetek összessége amelyek hatékonyan, 
@@ -132,7 +132,7 @@ Mutassuk be a <link xlink:href="https://progpater.blog.hu/2011/03/11/alternativ_
 Interface ComparableT szerepét!
 	</para>
 <para>
-	Megoldás forrása: <link xlink:href="https://github.com/kzoltan99/tabella">https://github.com/kzoltan99/tabella</link>
+	Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/prog2/tree/master/tabella">https://github.com/SylwerStone/prog2/tree/master/tabella</link>
 	</para>
 	<para>
 	A feladatunkban azt kell megoldanunk, hogy a labdarúgó bajnokságban (jelen esetben az NB1-ben) ne aszokásos módon menjen a pontozás, hanem azt is figyelembe

@@ -18,7 +18,7 @@ https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/adatok.html
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:<link xlink:href="https://github.com/kzoltan99/mandel.java/blob/master/MandelbrotHalmazNagy%C3%ADt%C3%B3.java">https://github.com/kzoltan99/mandel.java/blob/master/MandelbrotHalmazNagy%C3%ADt%C3%B3.java</link>             
+            Megoldás forrása:<link xlink:href="https://github.com/SylwerStone/prog2/blob/master/mandel.java/MandelbrotHalmazNagy%C3%ADt%C3%B3.java">https://github.com/SylwerStone/prog2/blob/master/mandel.java/MandelbrotHalmazNagy%C3%ADt%C3%B3.java</link>              
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat...
@@ -29,14 +29,7 @@ https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/adatok.html
 		    használ és ezt kell egy számunkra megfelelőre átállítani. Erre szerintem megfelelő lenne a Latin-2-es kódolás (kódja: iso-8859-2)
 		    Így már fordul a program gond nélkül.  
     </para>
-	    <figure>
-	<title>1.</title>
-	<mediaobject>
-		<imageobject>
-		<imagedata fileref="./img/9.png" scale = "60"/>
-		</imageobject>
-	</mediaobject>
-	</figure>
+	 
 	    
     </section>        
 
@@ -97,7 +90,7 @@ Tipp: https://www.tankonyvtar.hu/en/tartalom/tkt/javat-tanitok-javat/ch03.html#l
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://github.com/kzoltan99/prog2-feladatok/blob/master/para6.cpp">https://github.com/kzoltan99/prog2-feladatok/blob/master/para6.cpp</link>               
+            Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/prog2/blob/master/prog2%20feladatok/para6.cpp">https://github.com/SylwerStone/prog2/blob/master/prog2%20feladatok/para6.cpp</link>               
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat...
@@ -154,7 +147,7 @@ Lásd vis_prel_para.pdf! Apró módosításokat eszközölj benne, pl. színvil�
         <title>Perceptron osztály</title>
 	
 	<para>
-		Megoldás forrása: <link xlink:href="https://github.com/kzoltan99/perceptron">https://github.com/kzoltan99/perceptron</link>
+		Megoldás forrása: <link xlink:href="https://github.com/SylwerStone/prog2/tree/master/prog2%20feladatok/perceptron">https://github.com/SylwerStone/prog2/tree/master/prog2%20feladatok/perceptron</link>
 		</para>
 		<para>
 Dolgozzuk be egy külön projektbe a projekt Perceptron osztályát!

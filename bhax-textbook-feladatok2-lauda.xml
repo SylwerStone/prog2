@@ -44,16 +44,9 @@ public class KapuSzkenner {
 	keresztül kapcsolatot kiépíteni. Az igazság az, hogy ezt futtatni nem érdemes/szabad csak sajaát gépen, vagy ismert gépen mert akár fenyegetésnek is vehetik.
 	Ha ez a kapcsolatépítés lehetséges, vagyis a porton keresztül el tudjuk érni a szervert akkor a figyeli üzenetet kapjuk vissza ahhoz a porthoz.
 	Ha ez a kapcsolat viszont nem megvalósítható, akkor a try-catch segítségével visszakapunk egy kivételt a nem figyeli üzenet formájában. 
-	Ez pedig a következőképpen néz ki a gyakorlatban:
+	
 	</para>
-	<figure>
-	<title>1.</title>
-	<mediaobject>
-		<imageobject>
-		<imagedata fileref="./img/12.png" scale = "50"/>
-		</imageobject>
-	</mediaobject>
-	</figure>
+	
     </section>
 
    <section>
@@ -160,14 +153,7 @@ public void tesBitFeldolg() {
 	Ezután történik az összehasonlítás melyet a következő 3 sorban végzünk el. Magát az összehasonlítást az assertEquals függvény végzi.
 	Ez három paraméterrel rendelkezik, ezek rendre az elvárt eredmény, a kapott érték valamint a max eltérés mértéke lesznek.
 	</para>
-	<figure>
-	<title>2.</title>
-	<mediaobject>
-		<imageobject>
-		<imagedata fileref="./img/junit.png" scale = "40"/>
-		</imageobject>
-	</mediaobject>
-	</figure>
+	
 
 
 

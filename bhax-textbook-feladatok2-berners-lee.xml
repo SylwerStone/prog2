@@ -1,106 +1,261 @@
 <chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
     <info>
-        <title>Helló, Arroway!</title>
+        <title>Helló, Berners Lee!</title>
         <keywordset>
             <keyword/>
         </keywordset>
     </info>
 
     <section>
-        <title>C++ és Java összehasonlítás</title>
+        <title>C++ és Java</title>
         <para>
-C++: Benedek Zoltán, Levendovszky Tihamér Szoftverfejlesztés C++ nyelven
-        </para>
-		<para>
-Java: Nyékyné Dr. Gaizler Judit et al. Java 2 útikalauz programozóknak 5.0 I-II
-		</para>
-        <para>
-            Megoldás videó:
+            Ebben a fejezetben a Java és C++ nyelv összefüggéseit és különbségeit fogjuk vizsgálni és bővebben tárgyaljuk a Java programozási nyelvet. Már a könyv elején is említik, hogy
+            a Java a jelölésrendszerében nagyon sokmindent átvett a C++-ból.Az előzőleges tudásunkból pedig tudjuk, hogy a C++ eljárás és objektum orientált
+            nyelv, míg a Java már szimplán az objektum orientált szemléletmódot követi. Az objektum orientált programozás célja, hogy implementálja a valós-világ egyedeit. Az objektum a valós világ egyedeire utal. Míg az objektum orientált programozás egy paradigma arra, hogy
+            olyan programot írjunk, amely osztályokat és objektumokat használ.Az objektumoknak vannak tulajdonságai és van viselkedésük.Az objektumok tulajdonságait változókkal írjuk le általában, míg a viselkedésüket a metódusokkal jellemezzük. Az objektumok lehetnek fizikai vagy logikai dolgok.
+            Emellett az objektum orientáltságnál fontos megemlíteni az öröklődést.Amikor az egyik objektum örökli minden tulajdonságát és viselkedését a szülőobjektumától.
         </para>
         <para>
-            Megoldás forrása:                
+            
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-	    </para>
-	    <para>
-		
-Osztályozásnak nevezzük azt a folyamatot, amelynek során a hasonló objektumokat közös csoportokba azaz osztályokba soroljuk.
-Az objektumorientált programokban közös tervezésre ad lehetőséget, hogy sok objektum hasonló jellemzőkkel rendelkezik
-Nagy előnyt jelent az, ha sok hasonló objektumot közös "tervrajz" alapján tudunk elkészíteni.
-Ezeket az ún. tervrajzokat hívjuk osztályoknak.
-Az osztály bizonyos fajta objektumok közös változóit és metódusait írja le.
-Az ostályok definiálhatnak példányváltozókat, osztályváltozókat és osztálymetódusokat is. Az osztályváltozók az összes
-objektumpéldány számára megosztott információkat tartalmaznak. Ha osztályváltozókat alkalmatunk akkor feleslegesek lesznek
-a példányváltozók. Az osztályok legnagyobb előnye az újrafeljhasználhatóság.
-Az objektum változókból és kapcsolódó metódusokból felépített egység. Az objektum tulajdonságait célszerű elrejteni tehát nem publikusként kezelni
-és csak a metódusokon keresztül befolyásolni.
-Az objektumok használatának legnagyobb előnye a modularitás és az információelrejtés.
-Modularitás: Az objektum forráskódja független marad más objektumok forráskódjától és ennek köszönhetően könnyen
-tud illeszkedni a rendszer különböző részeihez.
-Információ elrejtés: Az objektum a publikus interfészén kommunikál a többi objektum felé.
-Illetve gondoskodik a saját adatairól és csak a metódusain keresztül ad változtatási lehetőséget a külső objektumoknak.
-A külső objektumoknak igazából nem is kell tudnia arról, hogy az objektum állapota
-hogyan van reprezentálva, csak a kívánt viselkedést kell kérnie a metódusokon keresztül.
-A pédányosításhoz a new operátort használjük a Javaban. Ez egy új példányt hoz létre az osztályból és foglal helyet a memóriában.
-Szükségünk van egy konstruktorra is ami a hívást írja elő, ennek a neve adja majd meg, hogy melyik osztályból kell létrehozni
-az új példányt és inicializálja az új objektumot. A new operátor egy hivatkozást ad vissza a létrehozott objektumra.
-Gyakran ezt a hivatkozást hozzárendeljük egy változóhoz. Ha a hivatkozás nincs hozzárendelve változóhoz, az objektumot
-nem lehet majd elérni, miután a new operátort tartalmazó utasítás végrehajtódott.
-Az ilyen objektumot névtelen objektumnak is szoktuk nevezni.
-A java  fordító egy bájtkódnak nevezett formátumra fordítja le a forráskódot amit a jvm önálló interpreterként fog érzékelni.
-Előnyös biztosnági szempontból de lassú, ezért minden jó jvm próbálja növelni a sebességet.
-A kódot fordítás előtt platformfüggő gépi kódra alakítja át. A nyelv szintaxisa c, c++ ból fejlődött ki, 
-ez a szerkezetben jelenik meg de a java el is tér tőlük vagyis a hasonlóság nem egyenlő az azonossággal. C és c++-al szemben nincs
-alapértelmezett visszatérési érték, mindig meg kell azt adni, váltózókhoz "="-el lehet értéket rendelni
-kezdeti értékadás után nincs definiálva az érték.
-Még egy különbség, hogy név túlterhelés ugyan van a Javaban is viszont operátor túlterhelés nincs benne.
-Illetve számos c++ kifejezés, utasítás szintaktikailag helyes Javaban is sőt sokszor a jelenetése is megegyezik.
-A java mint nyelv szűkebb a c++nál, de az osztálykönyvtárai miatt szélesebb az alkalmazhatósági területe.
-Támogatja például a GUI programozást, network programozást vagy éppen a perzisztenciát is.
-C++-ban is lehet ezeket csinálni de van amelyikhez külső könyvtárak segítségét kell igénybe vennünk.
-Valamint lehet benne forrás szinten hordozható programokat írni de a szerkesztett bináris kód már nem hordozható,
-mert a lefordított kód tartalmazza a helyi oprendszerre és hardverre vonatkozó feltételezéseket.
-A Java egyik fő célja és egyben egyik legnagyobb különbsége a c++-hoz képest az, hogy a kód teljes mértékben hordozható.
-Emiatt a Java szigorúbb előírásokat szab a típusok méretére, belső szerkezetére, a kifejezések kiértékelésére
-és a kivételek kiváltásának ellenőrzésésre. A statikus változók inicializálása is futási időben történik Javaban
-valamint sokkal kevesebb dolgot bíz az implementációra mint a c vagy a c++.
-Ezt azért teszi, hogy maga a kód amely hordozható ne függjön annyira a platformtól és az implementációtól. A Java nyelv nagyon odafigyel arra, hogy a kód a lehető 
-legpontosabban forduljon le és működjön. Ezért az ellenőrzésés során kitér olyan dolgokra is amire a c++ és a c nem.
-Ilyen például a lokális változók ellenőrzése, pontosabban annak ellenőrzése, hogy kapnak-e értéket.
-
+            A Java-ban ezen kívül nagy figyelmet fordítottak a biztonságra és a megbízhatóságra.
+            Ebből következik az, hogy itt már nincsenek pointerek minden referencia. A Javában interpretert használnak, míg a C++-ban compiler végzi a fordítást.
+            A C++ fordító gépi kódra fordítja a programot. Addig a Java fordítóprogramja egy byte kódot hoz létre, amelyet a JVM futtat. Ezért a Java platform független. Míg azért a C++-nál vannak megkötések.
+            A Java program objektumok és ezek blueprintjeinek összessége. Az osztály változókból és metódusokból épül fel. A JVM hátránya a sebesség.(lassabb mint a compiler)
         </para>
-    </section>        
-
+        <para>
+            
+        </para>
+        
+        <para>
+            Javában ha több osztályunk van akkor mindig azt fogja futtatni, amelyikben a JVM megtalálja a main-t.Javaban a C vagy C++ nyelvtől eltérően a visszatérési típus megadása minden metódus számára kötelező.
+            A C++-tól eltérően itt már egy igazi String szövegtömbbel kerülnek átadásra a paraméterek nem char.
+        </para>
+       
+        <para>
+        A java-val könnyen írhatunk olyan kódot, amely html-ben futtatható ez az applet.Ilyenkor a html oldalon kívül a java kód is letöltődik a weboldalt megtekintő részére és a távoli gépen fog futni.Persze gondoltak arra,hogy ez veszélyforrást jelenthetne
+        a vírusok miatt, de a java futtatórendszerének erős a biztonsági rendszere. Az applet programoknak fontos jellemzőjük, hogy hiányzik a main metódusuk.
+        </para>
+        
+        <para>
+            A változók típúsai nem különböznek a C++-ban használtaktól.
+        </para>
+       
+        <para>
+            Javában a final kulcsszóval hivatkozunk rájuk,míg C++-ban const ként. Javaban lehetőségünk van ezenkívül az unicode karakterek használatára is mivel már nem a 8 vagy 7 bites karaktereket használja, mint a C++ vagy a C.
+        </para>
+        
+        <para>
+            A megjegyzések használata megegyezik a C++-éval, kivétel hogy itt már vannak dokumentációs megjegyzések, ami olyan mint a több soros megjegyzés csak 2 db *-al kezdjük.
+            A dokumentációs megjegyzéseket a javadochoz tudjuk használni.Ez kiszedi a kódból a lényeges információkat és egy html oldalként jeleníti meg. Használata olyan mint a fordítása a java programoknak csak nem javacot használunk,hanem javadocot.
+        </para>
+        
+        <para>
+            Ugyan úgy mint C++-ban a class szóval hívjuk meg.Minden egyes osztály tagnak egyessével adhatjuk meg a láthatóságát.Ha elhagyjuk akkor csak az adott osztályban látható.
+            Az új objektumokat szintén ugyan úgy a new kulcsszóval vagyunk képesek létrehozni.Javaban az új objektumok létrehozásukkor inicializálódnak 0 vagy null értékkel. A nyelvben már nem karakter tömb hanem ellenőrzőtt String osztály szerepel.
+            A static kulcsszó nem egy elemhez tartozik hanem az osztályhoz.Ez azt jelenti, hogy a new alkalmazásakor nem foglalódik le memóriaterület számukra az objektumban.Nem kell inicializálásnál értéket adni nekik. Ezen kívül az osztály nevével is hivatkozhatunk rájuk.
+            Az ezzel megjelölt objektumból tetszőleges számú objektum készítése után is csak egy lesz.A memória felszabadítása úgy történik, hogy egyszerűen már nem hivatkozunk az objektumra, azaz null értéket adunk neki,ezzel szemben C++-ban a delete vagy a free metódust kellett használnunk. 
+        </para>
+        <para>
+        A metódusok a C++-hoz hasonlóan működnek és a kivételkezelés is a try-catch-el.A C++-al ellenben a Java már tartalmazza a párhuzamosítást és a grafikai megoldásokat sem kell különböző megoldásokkal megoldani pl Qt.A javának már van saját grafikai csomagja a Swing.Emellett kikerültek a Javaban a nyelből a goto és a const szavak ezek bár foglaltak mégsem használtak.
+        
+            
+        </para>
+        <para>Literálok:</para>
+        <para>
+         A típusoknál a primitív típúsú típusok mellet megjelentek a csomagoló osztályaik.
+         pl.:az int nek az Integer.Ez annyiban különbözik, hogy ezek objektumhivatkozásokat tartalmaznak.Ezek bizonyos kontextusokban nyerik el valódi jelentőségüket.Ilyenek az adatszerkezetek.
+         A java nyelvben a tömböket ugyan úgy kell megadni viszont a C++tól eltérően ez már igazi típus és nem csak a mutatók egy másik formája.  
+        </para>
+        <para>
+            Metódusnevek túlterhelése:
+        </para>
+        <para>
+            Egy osztálynál több metódus is szerepelhet ugyan azzal a névvel, ha a formálisparamétereinek a száma vagy típúsa eltérő. A java fordító alapból tudni fogja ezekből, hogy mikor melyik metódust kell meghívni. C++-ban is hasonlóképpen működik.
+        </para>
+        <para>
+            Bezárás,adatrejtés:
+        </para>
+        <para>
+            Az osztályoknál a jellemzőknek és metódusoknak két fajtájuk van. Vannak amelyeket elrejtünk más osztályok elől ez a privát vagy védett(protected).És vannak amelyeket megosztunk másokkal ezek a public információk.
+            Az állapotleíró jellemzőket általában privátként használjuk, míg a metódusok többsége publikus. A jelöletlen tagokra nem hivatkozhat bármelyik osztály csak az azonos csomagban lévők látják. A privát tagokat csak az osztályon belül lehet látni.
+            A protected szorosan összefügg az öröklődéssel, mivel ez a félnyilvános láthatóság kiterjesztése.A protected kategóriájú konstruktort egy más csomagba tartozó gyermek csak a super kulcsszóval képes meghívni.
+        </para>
+        <para>
+            Osztályhierarchia:
+        </para>
+        <para>
+            Az osztályok egymáshoz viszonyított összességét osztályhierarchiának nevezzük.Minden osztálynak az Object osztály vagy szülője ha nem használtunk extends-et rajta vagy pedig őse.
+        </para>
+        <para>Öröklődés vagy inheritence:</para>
+        <para>
+            Öröklődésnél egy osztály alosztályát hozzuk létre, amely örökli a szülő jellemzőit és metódusait. És ezeket sajátjaként használja.De ezenkívül lehetnek más tulajdonságai és metódusai is. Vagy olyan metódusai, amely ugyan azt csinálják mint a szülő osztálynak csak másképpen.
+            Az öröklődés egy is-a kapcsolat. Az öröklődés C++-ban a :-al történik,míg javában az extends kulcsszót használjuk.Javaban a super kulcsszóval használhatjuk a szülő konstruktorát, de alapvetően a gyerek nem örökli a konstruktorokat. C++-ban engedélyezett a többszörös öröklődés, de javaban nem.
+        </para>
+        <para>
+            Absztraktáció:
+        </para>
+        <para>
+            Az absztraktáció az amikor egy osztályból létrehozunk egy vázlatot nem deklarálunk semmi, csak definiálunk és ebből majd leszármaztatunk osztályokat. Absztraktációnál megfigyeljük, hogy mik a közös tulajdonságai az objektumainknak amikkel dolgozunk és lényegében egy közös interfészt nyújt, amely minden száramaztatott objektumra egyaránt érvényes.
+        </para>
+        <para>
+            Polimorfizmus:
+        </para>
+        <para>
+            A polimorfizmus lehetővé teszi, hogy mivel a gyermek minden olyan tulajdonsággal rendelkezik mint a szülője, ezért minden olyan esetben ahol a szülő használható, ott legyen használható a gyerek is.
+            Felülbíráló polimorfizmus mikor a gyermek örököl egy metódust a szülőtől viszont a gyermeknél az a metódus másképpen működik ezért lehetőség van overrideolni a metódusokat. Tehát az a lehetőséget, hogy egy változó nem csak a deklarált típúsú, hanem a származtatott objektumra is hivatkozhat polimorfizmusnak nevezzük.
+            Osztálydefiníciókat nem lehet felüldefiniálni csak elfedni. Mindig futási időben dől el, hogy a metódus mely implementációját kell meghívni ez a dinamikus kötés.C++-ban a dinamikus kötést a virtual kulcsszóval kellett jeleznünk java-ban minden virtuális kötéssel van ellátva.
+        </para>
+        <programlisting language="java"><![CDATA[
+            class Alakzat{
+            void kiir(){System.out.println("Alakzat vagyok");}
+            }
+            class Haromszog extends Alakzat{
+                void kiir(){System.out.println("Háromszög vagyok");}
+            }
+            class Teglalap extends Alakzat{
+                void kiir(){System.out.println("Teglalap vagyok");}
+            }
+            class Pelda{
+             public static void main(String[] args) {
+                
+                Alakzat a=new Alakzat();
+                a.kiir();
+                a=new Haromszog();
+                a.kiir();
+                a=new Teglalap();
+                a.kiir();
+             }
+                
+    
+            }
+          ]]>
+        </programlisting>
+        <para>
+            Interface:
+        </para>
+        <para>
+            Az interface már a C-óta létezik protokoll néven, innen vette át a java csak módosítva. Az interface egy új referencia típus.Az interface-ben a metódusok megvalósítás nélkül szerepelnek azaz csak deklarálva szerepelnek.
+            Az interface egy felületet definiál. Az interfacek használata egy új absztraktációs szintet jelent, így el lehetet vonatkoztatni a konkrét implementációtól. Ez megkönnyíti a tervezést és segíti a módosíthatóságot. Az interface használata az implementációján keresztül történik.Egy osztály implementál egy interfacet ha az osztály minden egyes interface által specifikált metódushoz
+            implementációt ad. Ahol interface szerepel típusként ott az interface-t implementáló osztály vagy leszármazottjának példánya felhasználható.
+            Interfaceknél is létezik öröklődés itt kiterjesztésnek nevezzük.Az osztályokéval ellentétben itt lehetséges a többszörös öröklődés. Egy osztály tetszőleges számú interfacet örökölhet, ez kiváltja a C++-os többszörös öröklődést.
+        </para>
+        <para>
+            A kulcsszavak: Azok a szavak amelyből a nyelv építkezik. Tehát ezek lefoglalt karakterek, amit nem adhatunk meg azonosítónak. Az azonosítók például változónevek azok a szavak amelyek betűvel kezdődnek majd folytatódhatnak számmal vagy betűvel.
+            Emellett vannak a literálok, amelyek nevesített konstansok értékeként vagy kezdőérték adáskor használatosak. Emellett lefoglalt karakterekhez tartoznak az operátorok, amelyek lehetnek egy vagy több operandúsúak. Használatukkor valamilyen művelet(matematikai,logika) hajtódik végre.
+        </para>
+        <para>
+            Utasítások:kétféle létezik a deklarációs és a kifejezéses. Deklarációs változók létrehozása, metódusok definiálása például. Kifejezéses a metódusok meghívása vagy ilyen például a prefix és a postfix operátorok használata. De az értékadás és példányosítás is.
+            A deklarációs utasítás a változó létrehozását és kezdőérték adását foglalja magába. Ezeknél jön képbe a blokkok használata és a hatáskör egy változónak az adott blokkon belül van hatásköre. Persze van kivétel is.
+        </para>
+        <para>
+            Konstansok: Javában a final kulcsszóval tudjuk létrehozni őket c++-ban ugyan ezt a const-al érjük el. A konstansoknak mindig nevet adunk és kezdőértéket. A típúsuk lehet bármilyen. A konstansok értéke nem változik a program futása során.
+        </para>
+        <para>
+            Karakterkészlet: a java a c++ 8bites karakterkészletével szemben már 16 bites karakterkészeltet használ, amely már a magyar szavakat is magába foglalja.
+        </para>
+        <para>
+            Metódusok: Az osztályok metódusai ugyebár az objektumok viselkedését írják le nem úgy mint a változók, amelyek a tulajdonságukat az objektumoknak.
+        </para>
+        <para>
+            Konstruktorok: Minden osztálynak van egy konstruktora mind javaban mind C++-ban. De emellett írhatunk újabb konstruktorokat. De lesz mindig egy alapértelmezett, amely nem vár paramétert. Ugyebár itt is él a metódus túlterhelés lehetősége. A konstruktor neve megegyezik az osztály nevével.
+            A konstruktorok minden példányosításkor meghívódnak. Öröklődéskor gyakori, hogy a leszármaztatott osztály meghívja a szülője konstruktorát.
+        </para>
+        <para>
+            Destruktorok: Javaban garbage collector c++-ban magunknak kell definiálni. Lényegében itt szabadítjuk fel az objektum által lefoglalt területet a memóriában,azaz töröljük az objektumot. A destruktor neve szintén megegyezik az osztály nevével csak itt egy ~ a neve előtt jelzi, hogy ő a destruktor. Alapból létrehozódik egy a compiler által
+            akkor kell sajátot írni ha van dinamikusan lefoglalt memóriánk az osztályban.
+        </para>
+        <para>
+            Indexelők: Szögletes zárójelekbe írjuk főként tömböknél használjuk őket.
+        </para>
+        <para>
+            A beágyazott osztályok lényegében osztályok az osztályban ezzel jelezzük a szoros kapcsolatot például,hogy egyik nem létezhet a másik nélkül,mert önmagában nem értelmezhető.
+        </para>
+        <para>
+            Gyűjtemények: olyan adatszerkezetek amely több objektumot tudnak tárolni, akár különböző típúsúakat is. C++-ban tömböt létrehozhatunk mutatók segítségével is maga a tömb egy olyan mutató amely más mutatókra mutat, amelyek a tömbben tárolt elemek címére mutatnak. Javában nincsenek mutatók tehát ilyet nem tehetünk meg.
+        </para>
+        <para>
+            Lambda kifejezések: egysoros utasítások amelyek lerövidítik és egyszerűbbé teszik a kódot általában a visszatérési értékük határozza meg a típúsúkat. Szerepel mind a C++-ban a C++11 től és a javaban is. Lényegében egyszeri felhasználású kódok, ezért is nem nevezzük el őket azaz névtelenek.
+            Viszont más a definiálásuk. Nézzük is meg:
+        </para>
+        <programlisting language="java"><![CDATA[
+            C++-ban a lambda kifejezés:
+            [ captures ] <tparams>(optional)(c++20) ( params ) specifiers exception attr -> ret requires(optional)(c++20) { body }
+            Captures lehet =-jellel érték szerint másolni vagy referenciaként &-el lehetséges. () a paraméterek kerülnek ide amiket átadunk a lambdának. Majd végül a -> operátor után jöhet a body {}- hogy mit csináljon a lambda utasítás.
+            Javaban a lambda kifejezés:
+            lambda operator -> body
+            pl: (p) -> System.out.println("One parameter: " + p);
+            ]]>
+          </programlisting>
+          <para>
+              Streamok: Javaban mint minden ez is objektumként van jelen. Tehát osztály felel a streamokért. C++-ban ez byte sorozatokként jelenik meg,tehát adatfolyamatokban(streamokban). A C-ben 3 előredefiniált és megnyitott állomány leírója. Az első az stdin ami a standard input C++-ban a cin.
+              A második az stdout a standard output vagy C++-ban a cout. És az stderr a szabványos hibakimenet.  Ezek magas szintű állományleírók az stdin csak olvasható a másik kettő csak írható. C++-ban leírók helyett már objektumok vannak. Az istream típúsú objektumok csak olvasható bemeneti adatfolyamatokat, míg az ostream csak írható
+              kimeneti adatfolyamatokat takarnak. Ezek az adatfolyamatok a következő operátorokat használják:
+          </para>
+          <programlisting language="java"><![CDATA[
+            beolvasás >> és kiírás << operátorok
+            ]]>
+          </programlisting>
+          <para>
+              A használatához bekell építenünk a az iostream állományt. C++-ban az állománykezelések is adatfolyamokat használnak. A kétirányú adatfolyamot az fstream valósítja meg. Az állományok megnyitását a konstruktorok végzik lezárásukat a destruktorok. Az adatfolyamok mögött létezik egy buffer, amely kezeli a beí¶t adatokat.  Az adatfolyam buffer itt egy olyan objektum, 
+              amely rdbuf tagfüggvényének paraméter nélküli változatával lekérdezhető az adatfolyamba beírt karakterek.
+          </para>
+          <para>
+              Szerializáció: Az objektumokat byte sorozattá alakítja. A használatához egy interface szükséges a Serializable.
+          </para>
+          <para>
+              Kivételkezelés: lényegében ez a hibakezelés, ha futási időben valamilyen probléma történik, amire számítunk, hogy bekövetkezhet. Például: rossz file név, kevés bemeneti argumentum stb.
+              Akkor ezeket képesek vagyunk kezelni és a futást a hibakezelő ágon folytatni. Ez C++-ban és Javaban is a try catch segítségével történik. De persze nem csak hiba felmerülésekor dobhatunk
+              exceptiont azaz kivételt. Javaban természetesen ez is objektum lesz mivel osztályokon alapszik az egész. És persze kiegészül a try-catch szerkezet egy finally-val.
+          </para>
+          <para>
+              Annotációk: @-al jelöljük őket a kódban. Ez lényegében a fordítónak nyújt segítséget. Nagyon gyakran fordul elő Javaban az @Override. Lényegében ez azt mondja meg, hogy felüldefiniáljuk a függvényét
+              a szülő osztálynak. Tehát a fordítónak ellenőriznie kell, hogy ez megtörténik -e.
+          </para>
+          <para>
+              Multiparadigmás nyelvek: Ahogy a neve is sugallja ezek olyan nyelvek, amelyek több programozási paradigmát támogat. Ezzel nyújt nagyobb szabadságot a programozónak. Tehát több eszközt is nyújt a programozónak
+              egy probléma megoldására. És a programozó feladata a számára leghasznosabb kiválasztása.
+          </para>
+  
+    </section>
     <section>
         <title>Python</title>
         <para>
-Python: Forstner Bertalan, Ekler Péter, Kelényi Imre: Bevezetés a mobilprogramozásba.
-Gyors prototípus-fejlesztés Python és Java nyelven (35-51 oldal), a kijelölt oldalakból élmény-olvasónapló
-        </para>
-		<para>
-            Megoldás videó:
+            A pythont 1990-ben alkotta meg Guido van Rossum. Ez egy magas szintű,dinamikus,objektum orientált programozási nyelv.
+            Pythonban a fejlesztés sokkal könnyebb mint Javaban vagy C/C++-ban. Tökéletes választás a prototípusok elkészítéséhez vagy algoritmusok teszteléséhez.
+            Rengetek modult tartalmaz. Ezek lefedik a hálózatkezelés,felhasználói felület kialakítása,fájlkezelés,rendszerhívások területet és ezen kívül még sok mást is.
+            A pythonnak nincs szüksége fordításra vagy linkelésre.A kódok pythonba sokkal rövidebbek mint java-ban vagy c++-ban.A magasszintű adattípusok segítségével összetett kifejezéseket valósíthatunk meg röviden.
+            A csoportosítás egyszerű tagolással működik nem kell zárójelezni. Nem kell a változókat vagy argumentumokat definiálni,ezen kívül a ; is elhagyható az utasítások végéről.
+            Ha több sorban akarunk utasítást használni a \-t kell használni.A python kis és nagybetű érzékeny. Az értelmezője mindent tokenekre bont. Tokenfajták:azonosítók,kulcsszók,operátorok,literálok,delimiterek.
+            A megjegyzéseket a #-el írhatjuk, ez a sor végéig tart. A pythonba minden adatot objektum reprezentál.Itt nem muszáj változó típust adni,ez automatikusan történik érték alapján.
+            </para>
+            <para>Adatszerkezetek: ennesek sima zárójellel hivatkozunk rájuk az értékek közé vesszőt teszünk, listák kocka zárójellel hivatkozunk rá,szótárak kapcsos zárójellel hivatkozunk rájuk kulcs-érték párokat használ.
+            Pythonban a null értékre None-val hivatkozunk.Szekvenciákat a + jellel fűzhetünk össze. Az indexek 0-nál kezdődnek,és ezekre a :-al hivatkozhatunk.
+            
         </para>
         <para>
-            Megoldás forrása:                
+            Változók:objektumokra mutató referenciák,nincs típusuk.Ugyan úgy mint a javánál ha egy objektumra nem hivatkozik már semmi, akkor a garbage collector felszabadítja.
+            Egy változó hozzárendelést a del kulcsszóval törölhetünk.A függvényben felvett változók alapértelmezetten lokálisak lesznek, ha globálisat akarunk létrehozni a függvény elején kell és a global kulcsszót kell elé írnunk.
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-	    </para>
-	    <para>
-		   A phyton programozási nyelv a C++-tól, c-től és a Javatól eltérő módon arra lett inkább tervezve
-		   hogy ne a futási sebességet tegye előtérbe, hanem inkább a programozót segítse azzal, hogy könnyebben olvasható.
-		   Maga a Phyton egy nagyon magas szintű programozási nyelv melyet 1989 és 1991 között alkottak meg.
-		   Egy objektumorientált interpreteres nyelv (tehát rögtön futtatható, nincs különbség a forrás és a tárgykód között).
-		   Ahogy a könyv címe is sejtteti az olvasóval a Phyton legelterjettebb felhasználási területe a mobilprogramozás.
-		   A nyelv legfőbb jellemzője ami megkülönbözteti az általunk már jobban ismert nyelvektől és ujdonság lehet a számunkra,
-		   hogy a szintaxisa behúzás alapú. Ez azt jelenti h az állításokat azonos szintű behúzásokkal tudjuk csoportosítani.
-		   Nem kell kapcsos zárójeleket és kulcsszavakat mint például a begin és az end használatba vennünk ehhez a feladathoz.
-		   Nagyon fontos, hogy az első utasítás a szkriptben nem lehet behúzás illetve ezeket egységesen kell kezelnünk.
-		   Továbbá az utasítások csak a sor végéig tartanak nem kell ezeket lezárni. Ha mégsem férne egy utasítás egy sorba akkor
-		   '/'-el tudjuk ezt folytatni a következő sorba.
+            Lista műveletek:count megadja az előfordulások számát,append hozzáfűz a lista végére,extend egy másik listát fűz a lista végére,insert beszúr egy elemet a megadott helyre.
+            Remove eltávolítja az első előfordulást a listából,pop az i edik elemet távolítja el.Revers megfordítja az elemek sorrendjét.Sort:sorba rendez.
         </para>
-    </section>  
-        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-</chapter>                
+        <para>
+            Kiiratás konzolra maradt a print.Az if hasonló mint a többi nyelven kivéve, hogy itt else if helyett elif-van. A függvények is hasonlóak kivéve a fornál a 3 as tagolásból kettő lett csak megkell adni min lépkedjen végig a ciklus.
+            Támogatja a goto utasítást. Függvényeket a def kulcsszóval hozhatunk létre.Függvényeknek egy visszatérési értéke van,de akár ennesekkel is visszatérhet.
+        </para>
+        <para>
+            Ahogy már említettem a python támogatja az objektum orientált programozást. Osztályokat a class szóval hozhatunk létre.Az osztályoknak lehetnek attribútumai és függvényei.
+            Ezen kívül van inheritance-is azaz öröklődés. Az osztályoknak lehet egy speciális konstruktor metódusuk az _ _init_ _.A speciális tulajdonságú változókat és függvényeket jelezzük még úgy, hogy két alulvonás közé írjuk őket.
+            Az init függvény első paramétere a self azaz az objektum maga.
+        </para>
+        <para>
+            Modulok:Sokat segítenek a mobilapplikáció fejlesztésben. PL.:messaging modul az sms üzenetek kezelését,sysinfo a telefon adatainak lekérdezése imei,aksi töltöttségi szintje.
+        </para>
+        <para>
+            A kivételkezelés szintén támogatott és hasonló a C++hoz try-catch szerkezet.
+        </para>
+    </section>
+</chapter>
